@@ -15,10 +15,17 @@ def test_Character_2():
     assert Char_2.name == "Chloe"
     assert Char_2.pouch == {"Healing Potion": 1}
     
+def test_Character_3():
+    chest = Treasure_Chest(100)
+    Char_3 = Character("Damian")
+    Char_3.empty_chest(chest)
+    assert Char_3.pouch["coins"] == 100
+    ...
 def test_Warrior_1():
     """Tests the basic features of a Warrior object
     """
     Warrior_1 = Warrior("Dylan")
+    assert Warrior_1.health == 100
     assert Warrior_1.power == 20
     assert Warrior_1.health == 100
     assert Warrior_1.defence == 20

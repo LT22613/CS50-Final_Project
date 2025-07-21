@@ -25,7 +25,7 @@ class Character(ABC):
         health (int): The Character's current health
     """
 
-    def __init__(self, name: str, max_health: int):
+    def __init__(self, name: str, max_health: int = 100):
         """Initialises a Character object.
 
         Args:
@@ -34,7 +34,7 @@ class Character(ABC):
         """
         self.name = name
         self.max_health = max_health
-        self.pouch = {"coins": 0, "healing_potion": 0}
+        self.pouch = {}
         
     @property
     def health(self):
@@ -167,7 +167,7 @@ class Warrior(Character):
             power(int): How hard the Warrior hits
     """
 
-    def __init__(self, name: str, max_health: int):
+    def __init__(self, name: str, max_health: int = 100):
         """Initialises a Warrior object
 
         Args:
@@ -187,7 +187,7 @@ class Mage(Character):
         Character (Class): A template Character object
     """
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, max_health: int = 75):
         """Initialises a Mage Character Instance.
 
         Args:
@@ -196,8 +196,8 @@ class Mage(Character):
             defence (int): How well the Character repels attacks
             stealth (int): How well the Character dodges attacks
         """
-        super().__init__(name)
-        self.max_health = 75
+        super().__init__(name, max_health)
+        self.health = self.max_health
         self.power = 25
         self.defence = 15
         self.stealth = 10
@@ -211,7 +211,7 @@ class Archer(Character):
         Character (Class): Tempate Character Object
     """
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, max_health: int = 50):
         """Initialises an Archer Object
 
         Args:
@@ -220,8 +220,8 @@ class Archer(Character):
             defence (int): _description_
             stealth (int): _description_
         """
-        super().__init__(name)
-        self.max_health = 100
+        super().__init__(name, max_health)
+        self.health = self.max_health
         self.defence = 10
         self.stealth = 20
         self.power = 15
