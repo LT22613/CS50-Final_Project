@@ -136,7 +136,7 @@ class Character(ABC):
             int: New health of the Character
         """
         # Check if the potion is a healing potion
-        if isinstance(potion, HealingPotion):
+        if isinstance(potion, Healing_Potion):
             # Check if the user has the potion in their pouch.
             if potion in self.pouch.keys():
                 # Check if the potion heals beyond the Character's max health
@@ -155,9 +155,6 @@ class Character(ABC):
         # Write code to re-prompt the player to enter a different command. 
         else:
             print("Potion is not a healing potion. ")
-            
-            
-            
     
     def empty_chest(self, chest):
         """Add the number of coins in the chest to the Character's pouch.
@@ -199,8 +196,14 @@ class Warrior(Character):
 class Mage(Character):
     """Defines a Mage Character, a subclass of the Character object
 
-    Args:
-        Character (Class): A template Character object
+    Attributes:
+        name (str): The Mage's name
+        health (int): The current health of the mage
+        max_health (int): The max health of the mage
+        defence (int): How well the Character repels attacks
+        stealth (int): How well the Character dodges attacks
+        power (int): How hard the Mage hits
+        accuracy (int): How accurate the Mage's attacks are
     """
 
     def __init__(self, name: str, max_health: int = 75):
@@ -223,18 +226,22 @@ class Mage(Character):
 class Archer(Character):
     """Archer subclass of Character
 
-    Args:
-        Character (Class): Tempate Character Object
+    Attributes:
+            name (str): The Archer's name
+            health (int): The current health of the Archer
+            max_health (int): The max health of the Archer
+            defence (int): How well the Archer repels attacks
+            stealth (int): How well the Archer dodges attacks
+            power (int): How hard the Archer hits
+            accuracy (int): How accurate the Archer's attacks are
     """
 
     def __init__(self, name: str, max_health: int = 50):
         """Initialises an Archer Object
 
         Args:
-            name (str): _description_
-            max_health (int): _description_
-            defence (int): _description_
-            stealth (int): _description_
+            name (str): The Archer's name
+            max_health (int): The max health of the Archer            
         """
         super().__init__(name, max_health)
         self.health = self.max_health
@@ -266,6 +273,12 @@ class Treasure_Chest:
         """
         self.num_of_coins = num_of_coins
 
+class Healing_Potion:
+    """Defines a Healing Potion
     
-    
+    Attributes:
+        
+    """
+    def __init__(self):
+        self.effect = 20
         
