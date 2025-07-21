@@ -137,14 +137,27 @@ class Character(ABC):
         """
         # Check if the potion is a healing potion
         if isinstance(potion, HealingPotion):
-            # Check if the potion heals beyond the Character's max health
-            if self.health + potion.effect > self.max_health:
-                self.health = self.max_health
-            # If not, then just add the healing effect of the potion.
+            # Check if the user has the potion in their pouch.
+            if potion in self.pouch.keys():
+                # Check if the potion heals beyond the Character's max health
+                if self.health + potion.effect > self.max_health:
+                    self.health = self.max_health
+                # If not, then just add the healing effect of the potion.
+                else:
+                    self.health += potion.effect
+                # Reduce the number of uses of the healing potion by 1.
+                self.pouch[potion] -= 1
+            # Print("You do not have a healing potion. ")
+            # Write code to repromt the playet to enter a different command.
             else:
-                self.health += potion.effect
-            # Reduce the number of uses of the healing potion by 1.
-            self.pouch[potion] -= 1
+                print("You do not have a healing potion. ")
+        # Print("Potion is not a healing potion. ")
+        # Write code to re-prompt the player to enter a different command. 
+        else:
+            print("Potion is not a healing potion. ")
+            
+            
+            
     
     def empty_chest(self, chest):
         """Add the number of coins in the chest to the Character's pouch.
