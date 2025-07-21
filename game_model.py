@@ -14,10 +14,12 @@ from abc import ABC
 import random
 
 class Character(ABC):
-    """A generic Character class for Player in the Maze
+    """A generic Character class for the player in the Maze
 
     Args:
         ABC (Abstract Class): Template for subclasses
+        
+    Methods:
     """
 
     def __init__(self, name: str):
@@ -43,7 +45,10 @@ class Character(ABC):
     
     @accuracy.setter
     def accuracy(self, accuracy):
-        self._accuracy = accuracy
+        if 0 <= accuracy <= 30:
+            self._accuracy = accuracy
+        else:
+            return "Accuracy must be between 0 and 30"
 
     @property
     def defence(self) -> int:
