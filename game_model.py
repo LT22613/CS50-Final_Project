@@ -34,6 +34,7 @@ class Character(ABC):
         """
         self.name = name
         self.max_health = max_health
+        self.health = max_health
         self.pouch = {}
         
     @property
@@ -210,7 +211,7 @@ class Mage(Character):
             stealth (int): How well the Character dodges attacks
         """
         super().__init__(name, max_health)
-        self.health = self.max_health
+        self.health = max_health
         self.power = 25
         self.defence = 15
         self.stealth = 10
