@@ -17,10 +17,11 @@ def test_Character_2():
     
 def test_Character_3():
     chest = Treasure_Chest(100)
+    assert chest.num_of_coins == 100
     Char_3 = Character("Damian")
     Char_3.empty_chest(chest)
     assert Char_3.pouch["coins"] == 100
-    ...
+    
 def test_Warrior_1():
     """Tests the basic features of a Warrior object
     """

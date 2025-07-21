@@ -153,7 +153,10 @@ class Character(ABC):
             chest (Treasure_Chest): A Treasure_Chest instance that contains a number of coins
         """
         # Add the number of coins in the chest to the number of coins the character has
-        self.pouch["coins"] += chest.num_of_coins
+        if "coins" in self.pouch.keys():
+            self.pouch["coins"] += chest.num_of_coins
+        else:
+            self.pouch["coins"] = chest.num_of_coins
 
 class Warrior(Character):
     """Defines a Warrior, a subclass of the Character object
