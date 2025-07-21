@@ -39,3 +39,10 @@ def test_Warrior_2():
     Warrior_2.pouch["Healing Potion"] = 2
     assert Warrior_2.pouch == {"Healing Potion": 2}
     
+def test_Mage_1():
+    Mage_1 = Mage("Claire")
+    Mage.health = 75
+    Mage.power = 25
+    Mage.defence = 15
+    Mage.stealth = 10
+    Mage.accuracy = 15 

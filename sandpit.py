@@ -1,12 +1,12 @@
-from game_model import Mage
+from game_model import Mage, Healing_Potion
 
-Char_1 = Mage()
+potion = Healing_Potion()
+Claire = Mage("Claire", 100)
 
-Attributes:
-            name (str): The Archer's name
-            health (int): The current health of the Archer
-            max_health (int): The max health of the Archer
-            defence (int): How well the Archer repels attacks
-            stealth (int): How well the Archer dodges attacks
-            power (int): How hard the Archer hits
-            accuracy (int): How accurate the Archer's attacks are
+Claire.health = 50
+
+Claire.pouch[potion] = 1
+Claire.heal()
+print(Claire.health)
+
+

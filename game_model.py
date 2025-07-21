@@ -126,7 +126,7 @@ class Character(ABC):
         if self.hit_chance > 0.5:
             enemy.health -= self.power
             
-    def heal(self, potion) -> int:
+    def heal(self) -> int:
         """Defines a healing method
 
         Args:
@@ -135,26 +135,20 @@ class Character(ABC):
         Returns:
             int: New health of the Character
         """
-        # Check if the potion is a healing potion
-        if isinstance(potion, Healing_Potion):
-            # Check if the user has the potion in their pouch.
-            if potion in self.pouch.keys():
-                # Check if the potion heals beyond the Character's max health
-                if self.health + potion.effect > self.max_health:
-                    self.health = self.max_health
-                # If not, then just add the healing effect of the potion.
-                else:
-                    self.health += potion.effect
-                # Reduce the number of uses of the healing potion by 1.
-                self.pouch[potion] -= 1
-            # Print("You do not have a healing potion. ")
-            # Write code to re-prompt the playet to enter a different command.
+        # Check if any of the items in the pouch are Healing_Potion objects
+        healing_potions = [item for item in self.pouch.keys() if isinstance(item, Healing_Potion)]
+        if healing_potions:
+            potion = healing_potions[0]
+            # Check if the potion heals beyond the Character's max health
+            if self.health + potion.effect > self.max_health:
+                self.health = self.max_health
             else:
-                print("You do not have a healing potion. ")
-        # Print("Potion is not a healing potion. ")
-        # Write code to re-prompt the player to enter a different command. 
+                self.health += potion.effect
+            # Reduce the number of uses of the healing potion by 1.
+            potion.num_uses -= 1
         else:
-            print("Potion is not a healing potion. ")
+            print("You do not have a healing potion.")
+        
     
     def empty_chest(self, chest):
         """Add the number of coins in the chest to the Character's pouch.
@@ -280,5 +274,6 @@ class Healing_Potion:
         
     """
     def __init__(self):
+        self.num_uses = 5
         self.effect = 20
         
