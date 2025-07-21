@@ -16,10 +16,13 @@ import random
 class Character(ABC):
     """A generic Character class for the player in the Maze
 
-    Args:
-        ABC (Abstract Class): Template for subclasses
-        
-    Methods:
+    Attributes:
+        name (str): The Character's name
+        accuracy (int): The Character's accuracy
+        pouch (dict): The Character's pouch
+        defence (int): The Character's defence rating
+        stealth (int): The Character's stealth rating
+        health (int): The Character's current health
     """
 
     def __init__(self, name: str):
@@ -27,12 +30,36 @@ class Character(ABC):
 
         Args:
             name (str): The character's name
-            max_health (int): The maximum health of the character
-            defence (int): How well Character repels attacks
-            stealth (int): How well Character dodges attacks
         """
         self.name = name
         self.pouch = {}
+        
+    @property
+    def health(self):
+        """Creates a health property that returns the character's current health.
+
+        Returns:
+            health (int) : The character's current health.
+        """
+        return self._health
+    
+    @health.setter
+    def health(self, new_health):
+        """Creates a health setter that allows the user to set a new health for the character.
+
+        Args:
+            health (int) : The character's current health.
+            new_health (int): The character's new health.
+        """
+        # If the new health is set to below 0, the new health is corrected to be 0.
+        if new_health < 0:
+            self._health = 0
+        # If the new health is set higher than the character's max health, set it to the character's max health.
+        elif new_health > self.max_health:
+            self._health = self.max_health
+        # Otherwise, if the new health is between 0 and the character's max health, the new health is set to the entered value.
+        else: 
+            self._health = new_health
         
     @property
     def accuracy(self) -> int:
@@ -83,7 +110,20 @@ class Character(ABC):
             int: The calculated dodge chance based on stealth and defence
         """
         return self.stealth * self.defence / 100
+    
+    def hit_chance(self, enemy):
+        """A method defining the chance of attacking an enemy
 
+        Args:
+            enemy (Character): An enemy object
+        """
+        return (1 - enemy.dodge_chance()) * self.accuracy / 10
+
+    def attack(self, enemy):
+        """An attack method for attacking an enemy object"""
+        if self.hit_chance > 0.5:
+            enemy.health -= self.power
+            
     def heal(self, potion) -> int:
         """Defines a healing method
 
@@ -98,19 +138,9 @@ class Character(ABC):
                 self.health = self.max_health
             else:
                 self.health += potion.effect
-
-    def attack(self, enemy):
-        """An attack method for attacking an enemy object"""
-        if self.attack_chance > 0.5:
-            enemy.health -= self.power
-    
-    def attack_chance(self, enemy):
-        """A method defining the chance of attacking an enemy
-
-        Args:
-            enemy (Character): An enemy object
-        """
-        return (1 - enemy.dodge_chance()) * self.accuracy / 10
+            self.pouch[potion] -= 1
+            if self.pouch[potion] == 0:
+                    self.pouch = {}  
 
 
 class Warrior(Character):
