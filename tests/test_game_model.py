@@ -126,3 +126,24 @@ def test_mage_stealth_limits():
     assert mage.stealth == 0
     mage.stealth = 5
     assert mage.stealth == 5
+
+def test_archer_init():
+    Craig = Archer("Craig")
+    assert Craig.name == "Craig"
+    assert Craig.max_health == 50
+    assert Craig.health == 50
+    assert Craig.defence == 10
+    assert Craig.stealth == 20
+    assert Craig.power == 15
+    assert Craig.accuracy == 20
+
+def test_monster_init():
+    for _ in range(100):
+        random.seed(_)
+        Blob = Monster("Blob")
+        assert Blob.name == "Blob"
+        assert 40 <= Blob.max_health <= 80
+        assert 5 <= Blob.defence <= 9
+        assert 5 <= Blob.stealth <= 9
+        assert 5 <= Blob.power <= 15
+        
