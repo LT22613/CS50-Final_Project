@@ -12,6 +12,7 @@
 
 from abc import ABC, abstractmethod
 import random
+import re
 
 
 class Character(ABC):
@@ -26,7 +27,7 @@ class Character(ABC):
         health (int): The Character's current health
     """
 
-    def __init__(self, name: str, max_health: int = 100):
+    def __init__(self, name: str, max_health: int = 100, accuracy = 20, defence = 20, stealth = 15):
         """Initialises a Character object.
 
         Args:
@@ -35,7 +36,10 @@ class Character(ABC):
         """
         self.name = name
         self.max_health = max_health
-        self.health = max_health
+        self._health = max_health
+        self._accuracy = accuracy
+        self._defence = defence
+        self._stealth = stealth
         self.pouch = {}
 
     @property
@@ -55,9 +59,12 @@ class Character(ABC):
             health (int) : The character's current health.
             new_health (int): The character's new health.
         """
-        # If the new health is set to below 0, the new health is corrected to be 0.
+        # If current health + the added value is above max health, then set to max health
         if value > self.max_health:
             self._health = self.max_health
+        # Otherwise, add the value
+        elif value < 0:
+            self._health = 0
         else:
             self._health = value
             
@@ -71,11 +78,18 @@ class Character(ABC):
         return self._accuracy
 
     @accuracy.setter
-    def accuracy(self, accuracy):
-        if 0 <= accuracy <= 30:
-            self._accuracy = accuracy
+    def accuracy(self, value):
+        # Only set accuracy if value is an integer
+        if isinstance(value, int):
+            if 0 <= value <= 30:
+                self._accuracy = value
+            elif value > 30:
+                self._accuracy = 30
+            else:
+                self._accuracy = 0
         else:
-            return "Accuracy must be between 0 and 30"
+            raise ValueError("Accuracy must be an integer")
+    
 
     @property
     def defence(self) -> int:
@@ -87,8 +101,16 @@ class Character(ABC):
         return self._defence
 
     @defence.setter
-    def defence(self, defence):
-        self._defence = defence
+    def defence(self, value):
+        if isinstance(value, int):
+            if 0 <= value <= 30:
+                self._defence = value
+            elif value < 0:
+                self._defence = 0
+            else:
+                self._defence = 30
+        else:
+            raise ValueError("Defence must be an integer")
 
     @property
     def stealth(self) -> int:
@@ -100,8 +122,24 @@ class Character(ABC):
         return self._stealth
 
     @stealth.setter
-    def stealth(self, stealth) -> int:
-        self._stealth = stealth
+    def stealth(self, value) -> int:
+        """Setter method for setting the stealth attribute of a Character object.
+
+        Args:
+            stealth (int): How well the object can dodge an attack
+
+        Returns:
+            stealth (int): The updated stealth value of the object.
+        """
+        if isinstance(value, int):
+            if 0 <= value <= 30:
+                self._stealth = value
+            elif value < 0:
+                self._stealth = 0
+            else:
+                self._stealth = 30
+        else:
+            raise ValueError("Defence must be an integer")
 
     def dodge_chance(self) -> int:
         """A method defining the chance of successfully avoiding an attack
@@ -181,11 +219,11 @@ class Warrior(Character):
             name (str): The name of the Warrior object
         """
         super().__init__(name, max_health)
-        self.health = self.max_health
+        self._health = max_health
         self.power = 20
-        self.defence = 20
-        self.stealth = 5
-        self.accuracy = 10
+        self._defence = 20
+        self._stealth = 5
+        self._accuracy = 10
 
 
 class Mage(Character):
@@ -201,7 +239,7 @@ class Mage(Character):
         accuracy (int): How accurate the Mage's attacks are
     """
 
-    def __init__(self, name: str, max_health: int = 75):
+    def __init__(self, name: str, max_health = 75):
         """Initialises a Mage Character Instance.
 
         Args:
@@ -215,7 +253,7 @@ class Mage(Character):
         self.power = 25
         self.defence = 15
         self.stealth = 10
-        self.accuracy = 15
+        self._accuracy = 15
 
 
 class Archer(Character):
@@ -239,7 +277,7 @@ class Archer(Character):
             max_health (int): The max health of the Archer
         """
         super().__init__(name, max_health)
-        self.health = self.max_health
+        self._health = self.max_health
         self.defence = 10
         self.stealth = 20
         self.power = 15
@@ -247,8 +285,9 @@ class Archer(Character):
 
 
 class Monster(Character):
-    def __init__(self):
+    def __init__(self, name):
         """Instantiates a Monster Object that inherits its methods and attributes from the Character Class."""
+        super().__init__(name)
         self.max_health = random.randint(40, 80)
         self.health = self.max_health
         self.defence = random.randint(5, 9)
@@ -272,6 +311,8 @@ class Healing_Potion:
     """Defines a Healing Potion
 
     Attributes:
+        num_uses (int): Number of times the Healing Potion can be used
+        effect (int): Amount the Healing Potion heals
 
     """
 
