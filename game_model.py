@@ -135,14 +135,16 @@ class Character(ABC):
         Returns:
             int: New health of the Character
         """
+        # Check if the potion is a healing potion
         if isinstance(potion, HealingPotion):
+            # Check if the potion heals beyond the Character's max health
             if self.health + potion.effect > self.max_health:
                 self.health = self.max_health
+            # If not, then just add the healing effect of the potion.
             else:
                 self.health += potion.effect
+            # Reduce the number of uses of the healing potion by 1.
             self.pouch[potion] -= 1
-            if self.pouch[potion] == 0:
-                    self.pouch = {}  
     
     def empty_chest(self, chest):
         """Add the number of coins in the chest to the Character's pouch.
@@ -150,6 +152,7 @@ class Character(ABC):
         Args:
             chest (Treasure_Chest): A Treasure_Chest instance that contains a number of coins
         """
+        # Add the number of coins in the chest to the number of coins the character has
         self.pouch["coins"] += chest.num_of_coins
 
 class Warrior(Character):
