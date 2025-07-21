@@ -147,3 +147,10 @@ def test_monster_init():
         assert 5 <= Blob.stealth <= 9
         assert 5 <= Blob.power <= 15
         
+def test_healing_potion_init():
+    Potion = Healing_Potion()
+    assert Potion.num_uses == 5
+    assert Potion.effect == 20
+    
+
+        
