@@ -25,7 +25,7 @@ class Character(ABC):
         health (int): The Character's current health
     """
 
-    def __init__(self, name: str, max_health):
+    def __init__(self, name: str, max_health: int):
         """Initialises a Character object.
 
         Args:
@@ -33,8 +33,8 @@ class Character(ABC):
             max_health (int): The character's maximum health
         """
         self.name = name
-        self.max_health = 100
-        self.pouch = {}
+        self.max_health = max_health
+        self.pouch = {"coins": 0, "healing_potion": 0}
         
     @property
     def health(self):
@@ -143,7 +143,14 @@ class Character(ABC):
             self.pouch[potion] -= 1
             if self.pouch[potion] == 0:
                     self.pouch = {}  
+    
+    def empty_chest(self, chest):
+        """Add the number of coins in the chest to the Character's pouch.
 
+        Args:
+            chest (Treasure_Chest): A Treasure_Chest instance that contains a number of coins
+        """
+        self.pouch["coins"] += chest.num_of_coins
 
 class Warrior(Character):
     """Defines a Warrior, a subclass of the Character object
@@ -157,28 +164,18 @@ class Warrior(Character):
             power(int): How hard the Warrior hits
     """
 
-    def __init__(self, name):
+    def __init__(self, name: str, max_health: int):
         """Initialises a Warrior object
 
         Args:
             name (str): The name of the Warrior object
         """
-        super().__init__(name)
-        self.max_health = 100
+        super().__init__(name, max_health)
         self.health = self.max_health
         self.power = 20
         self.defence = 20
         self.stealth = 5
         self.accuracy = 10
-    
-    def attack(self, enemy):
-        """Attack method for Warrior objects
-
-        Args:
-            enemy (Class): An enemy object
-        """
-        enemy.health -= self.power
-
 
 class Mage(Character):
     """Defines a Mage Character, a subclass of the Character object
@@ -229,18 +226,27 @@ class Archer(Character):
 
 class Monster(Character):
     def __init__(self):
-        """Instantiates a Monster Object
-
-        Args:
-            max_health (int): Monster's maximum health
-            defence (int): Monster's defence rating
-            stealth (int): Monster's stealth rating
+        """Instantiates a Monster Object that inherits its methods and attributes from the Character Class.
         """
         self.max_health = random.randint(40, 80)
         self.health = self.max_health
         self.defence = random.randint(5, 9)
         self.stealth = random.randint(5, 9)
         self.power = random.randint(5, 15)
+
+
+class Treasure_Chest:
+    """Defines a Treasure Chest item that contains a large number of coins.
+    """
+    
+    def __init__(self, num_of_coins):
+        """Defines the number of coins in the treasure chest.
+
+        Args:
+            num_of_coins (int): Number of coins in the treasure chest.
+        """
+        self.num_of_coins = num_of_coins
+
     
     
         
