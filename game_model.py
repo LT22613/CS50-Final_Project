@@ -10,7 +10,7 @@
 9. Boss - Subclass of Monster
 """
 
-from abc import ABC
+from abc import ABC, abstractmethod
 import random
 
 class Character(ABC):
@@ -25,13 +25,15 @@ class Character(ABC):
         health (int): The Character's current health
     """
 
-    def __init__(self, name: str):
+    def __init__(self, name: str, max_health):
         """Initialises a Character object.
 
         Args:
             name (str): The character's name
+            max_health (int): The character's maximum health
         """
         self.name = name
+        self.max_health = 100
         self.pouch = {}
         
     @property
@@ -168,7 +170,7 @@ class Warrior(Character):
         self.defence = 20
         self.stealth = 5
         self.accuracy = 10
-
+    
     def attack(self, enemy):
         """Attack method for Warrior objects
 
