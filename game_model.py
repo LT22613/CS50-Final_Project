@@ -148,7 +148,7 @@ class Character(ABC):
                 # Reduce the number of uses of the healing potion by 1.
                 self.pouch[potion] -= 1
             # Print("You do not have a healing potion. ")
-            # Write code to repromt the playet to enter a different command.
+            # Write code to re-prompt the playet to enter a different command.
             else:
                 print("You do not have a healing potion. ")
         # Print("Potion is not a healing potion. ")
