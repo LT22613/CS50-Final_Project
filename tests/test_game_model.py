@@ -187,7 +187,18 @@ def test_hit_chance_warrior():
     assert round(warrior.hit_chance(enemy_2), 3) == 0.525
     assert round(warrior.hit_chance(enemy_3), 3) == 0.406
 
-
+def test_hit_chance_mage():
+    mage = Mage("Henry")
+    enemy_1 = Monster("Argie", random.seed(1))
+    enemy_2 = Monster("Bleurgh", random.seed(2))
+    enemy_3 = Monster("Coral", random.seed(3))
+    assert round(mage.hit_chance(enemy_1), 3) == 0.520
+    assert round(mage.hit_chance(enemy_2), 3) == 0.600
+    assert round(mage.hit_chance(enemy_3), 3) == 0.464
+    
+def test_hit_chance_archer():
+    
+    
     
     
     
