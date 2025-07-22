@@ -27,7 +27,7 @@ class Character(ABC):
         health (int): The Character's current health
     """
 
-    def __init__(self, name: str, max_health: int = 100, accuracy = 20, defence = 20, stealth = 15):
+    def __init__(self, name: str, max_health: float = 100, accuracy = 8, defence = 8, stealth = 8):
         """Initialises a Character object.
 
         Args:
@@ -43,7 +43,7 @@ class Character(ABC):
         self.pouch = {}
 
     @property
-    def health(self):
+    def health(self) -> float:
         """Creates a health property that returns the character's current health.
 
         Returns:
@@ -52,7 +52,7 @@ class Character(ABC):
         return self._health
 
     @health.setter
-    def health(self, value):
+    def health(self, value) -> float:
         """Creates a health setter that allows the user to set a new health for the character.
 
         Args:
@@ -81,10 +81,10 @@ class Character(ABC):
     def accuracy(self, value):
         # Only set accuracy if value is an integer
         if isinstance(value, int):
-            if 0 <= value <= 30:
+            if 0 <= value <= 10:
                 self._accuracy = value
-            elif value > 30:
-                self._accuracy = 30
+            elif value > 10:
+                self._accuracy = 10
             else:
                 self._accuracy = 0
         else:
@@ -103,12 +103,12 @@ class Character(ABC):
     @defence.setter
     def defence(self, value):
         if isinstance(value, int):
-            if 0 <= value <= 30:
+            if 0 <= value <= 10:
                 self._defence = value
             elif value < 0:
                 self._defence = 0
             else:
-                self._defence = 30
+                self._defence = 10
         else:
             raise ValueError("Defence must be an integer")
 
@@ -132,12 +132,12 @@ class Character(ABC):
             stealth (int): The updated stealth value of the object.
         """
         if isinstance(value, int):
-            if 0 <= value <= 30:
+            if 0 <= value <= 10:
                 self._stealth = value
             elif value < 0:
                 self._stealth = 0
             else:
-                self._stealth = 30
+                self._stealth = 10
         else:
             raise ValueError("Defence must be an integer")
 
@@ -159,10 +159,11 @@ class Character(ABC):
 
     def attack(self, enemy):
         """An attack method for attacking an enemy object"""
-        if self.hit_chance > 0.5:
-            enemy.health -= self.power
+        if self.hit_chance > 0.7:
+            enemy.health -= self.power * 1.5
+        
 
-    def heal(self) -> int:
+    def heal(self) -> float:
         """Defines a healing method
 
         Args:
@@ -221,8 +222,8 @@ class Warrior(Character):
         super().__init__(name, max_health)
         self._health = max_health
         self.power = 20
-        self._defence = 20
-        self._stealth = 5
+        self._defence = 10
+        self._stealth = 6
         self._accuracy = 10
 
 

@@ -160,3 +160,7 @@ def test_empty_chest():
     Char_3 = Character("Damian")
     Char_3.empty_chest(chest)
     assert Char_3.pouch["coins"] == 100
+
+def test_dodge_chance():
+    ...
+    
