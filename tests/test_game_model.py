@@ -234,7 +234,7 @@ def test_hit_chance_mage():
 def test_hit_chance_archer():
     """
     Test hit chance values for an Archer attacking three different Monsters.
-    Archer has high accuracy and stealth, expected to have the best hit rates.
+    Archer has high accuracy, expected to have the best hit rates.
     """
     archer = Archer("Shooter")
     enemy_1 = Monster("Argie", random.seed(1))
