@@ -163,22 +163,51 @@ def test_empty_chest():
     assert Char_3.pouch["coins"] == 100
 
 def test_dodge_chance_warrior():
+    """
+    Test that a Warrior's dodge chance is calculated correctly.
+
+    The formula is (stealth * defence) / 100.
+    For a Warrior with default stealth=5 and defence=12, dodge chance = 0.6.
+    """
     warrior = Warrior("Dennis")
     assert warrior.dodge_chance() == 0.6
-    
+
+
 def test_dodge_chance_mage():
+    """
+    Test that a Mage's dodge chance is calculated correctly.
+
+    Default stats: stealth=10, defence=15 → dodge chance = 0.56
+    """
     mage = Mage("Daisy")
     assert mage.dodge_chance() == 0.56
 
+
 def test_dodge_chance_archer():
+    """
+    Test that an Archer's dodge chance is calculated correctly.
+
+    Default stats: stealth=20, defence=10 → dodge chance = 0.5
+    """
     archer = Archer("Dart")
     assert archer.dodge_chance() == 0.5
 
+
 def test_dodge_chance_monster():
+    """
+    Test that a Monster's dodge chance is computed correctly
+    based on its randomly assigned stealth and defence stats.
+    """
     monster = Monster("Mawg")
-    assert monster.dodge_chance() == (monster.stealth * monster.defence) / 100
-    
+    expected = (monster.stealth * monster.defence) / 100
+    assert monster.dodge_chance() == expected
+
+
 def test_hit_chance_warrior():
+    """
+    Test hit chance values for a Warrior attacking three different Monsters.
+    The expected values are precomputed using known enemy stats (seeded randomness).
+    """
     warrior = Warrior("Arthur")
     enemy_1 = Monster("Argie", random.seed(1))
     enemy_2 = Monster("Bleurgh", random.seed(2))
@@ -187,7 +216,12 @@ def test_hit_chance_warrior():
     assert round(warrior.hit_chance(enemy_2), 3) == 0.525
     assert round(warrior.hit_chance(enemy_3), 3) == 0.406
 
+
 def test_hit_chance_mage():
+    """
+    Test hit chance values for a Mage attacking three different Monsters.
+    Mage has higher accuracy and power, so results should be higher than Warrior's.
+    """
     mage = Mage("Henry")
     enemy_1 = Monster("Argie", random.seed(1))
     enemy_2 = Monster("Bleurgh", random.seed(2))
@@ -195,8 +229,13 @@ def test_hit_chance_mage():
     assert round(mage.hit_chance(enemy_1), 3) == 0.520
     assert round(mage.hit_chance(enemy_2), 3) == 0.600
     assert round(mage.hit_chance(enemy_3), 3) == 0.464
-    
+
+
 def test_hit_chance_archer():
+    """
+    Test hit chance values for an Archer attacking three different Monsters.
+    Archer has high accuracy and stealth, expected to have the best hit rates.
+    """
     archer = Archer("Shooter")
     enemy_1 = Monster("Argie", random.seed(1))
     enemy_2 = Monster("Bleurgh", random.seed(2))
@@ -204,11 +243,28 @@ def test_hit_chance_archer():
     assert round(archer.hit_chance(enemy_1), 3) == 0.585
     assert round(archer.hit_chance(enemy_2), 3) == 0.675
     assert round(archer.hit_chance(enemy_3), 3) == 0.522
+
+
+def test_attack_warrior(capsys):
+    """
+    Test the Warrior's attack outcomes and their corresponding messages.
     
+    Simulates attacks on 3 monsters with seeded randomness.
+    Captures printed output to assert expected hit quality message.
+    """
+    warrior = Warrior("Dave")
     
-    
-    
-    
-    
-    
+    enemy_1 = Monster("Argie", random.seed(1))
+    print(warrior.attack(enemy_1))
+    captured = capsys.readouterr()
+    assert captured.out.strip() == "Your low accuracy caused you to deal reduced damage"
+
+    enemy_2 = Monster("Bleurgh", random.seed(2))
+    print(warrior.attack(enemy_2))
+    captured = capsys.readouterr()
+    assert captured.out.strip() == "Your accuracy enabled you to deal regular damage"
+
+    enemy_3 = Monster("Coral", random.seed(3))
+
+
     

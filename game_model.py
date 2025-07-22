@@ -159,8 +159,17 @@ class Character(ABC):
 
     def attack(self, enemy):
         """An attack method for attacking an enemy object"""
-        if self.hit_chance > 0.7:
+        if self.hit_chance(enemy) > 0.7:
             enemy.health -= self.power * 1.5
+            return "Your high accuracy caused you to deal extra damage!"
+        elif self.hit_chance(enemy) > 0.5:
+            enemy.health -= self.power 
+            return "Your accuracy enabled you to deal regular damage"
+        elif self.hit_chance(enemy) > 0.3:
+            enemy.health -= self.power * 0.5
+            return "Your low accuracy caused you to deal reduced damage"
+        else:
+            return "Your accuracy is too low to harm this enemy"
         
 
     def heal(self) -> float:

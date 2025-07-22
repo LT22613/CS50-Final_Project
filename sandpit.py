@@ -1,16 +1,12 @@
 from game_model import *
 
 
-archer = Archer("Dodge")
+warrior = Warrior("Dodge")
 enemy_1 = Monster("Argie", random.seed(1))
 enemy_2 = Monster("Bleurgh", random.seed(2))
 enemy_3 = Monster("Coral", random.seed(3))
-print(archer.defence)
-print(archer.stealth)
-print(archer.accuracy)
-print(f"{round(archer.hit_chance(enemy_1), 3):.3f}")
-print(f"{round(archer.hit_chance(enemy_2), 3):.3f}")
-print(f"{round(archer.hit_chance(enemy_3), 3):.3f}")
+print(warrior.attack(enemy_3))
+
 """
 
 print(test_Mage.dodge_chance())
