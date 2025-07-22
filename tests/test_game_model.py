@@ -28,28 +28,29 @@ def test_warrior_init():
     warrior = Warrior("Dylan")
     assert warrior.health == 100
     assert warrior.power == 20
-    assert warrior.defence == 20
-    assert warrior.stealth == 5
+    assert warrior.defence == 10
+    assert warrior.stealth == 6
+    assert warrior.accuracy == 7
 
 def test_mage_init():
     """Ensure Mage initializes with correct base stats."""
     mage = Mage("Claire")
     assert mage.health == 75
     assert mage.power == 25
-    assert mage.defence == 15
-    assert mage.stealth == 10
-    assert mage.accuracy == 15
+    assert mage.defence == 7
+    assert mage.stealth == 8
+    assert mage.accuracy == 8
 
 def test_archer_init():
     """Verify Archer starts with correct attributes."""
     Craig = Archer("Craig")
     assert Craig.name == "Craig"
     assert Craig.max_health == 50
-    assert Craig.health == 50
-    assert Craig.defence == 10
-    assert Craig.stealth == 20
     assert Craig.power == 15
-    assert Craig.accuracy == 20
+    assert Craig.health == 50
+    assert Craig.defence == 5
+    assert Craig.stealth == 10
+    assert Craig.accuracy == 8
 
 def test_monster_init():
     """Verify that Monster starts with attributes in the correct range."""
@@ -88,7 +89,7 @@ def test_mage_accuracy_limits():
     """Check Mage accuracy clamps to 30 and raises on invalid input."""
     mage = Mage("Shaun")
     mage.accuracy = 40
-    assert mage.accuracy == 30
+    assert mage.accuracy == 10
 
     mage = Mage("Dylan")
     with pytest.raises(ValueError):
@@ -98,7 +99,7 @@ def test_mage_defence_limits():
     """Ensure Mage defence stays between 0 and 30."""
     mage = Mage("Lily")
     mage.defence = 40
-    assert mage.defence == 30
+    assert mage.defence == 10
     mage.defence = -10
     assert mage.defence == 0
     mage.defence = 5
@@ -108,11 +109,11 @@ def test_mage_stealth_limits():
     """Ensure Mage stealth stays between 0 and 30."""
     mage = Mage("Snape")
     mage.stealth = 40
-    assert mage.stealth == 30
+    assert mage.stealth == 10
     mage.stealth = -10
     assert mage.stealth == 0
-    mage.stealth = 30
-    assert mage.stealth == 30
+    mage.stealth = 10
+    assert mage.stealth == 10
     mage.stealth = 0
     assert mage.stealth == 0
     mage.stealth = 5
@@ -161,6 +162,35 @@ def test_empty_chest():
     Char_3.empty_chest(chest)
     assert Char_3.pouch["coins"] == 100
 
-def test_dodge_chance():
-    ...
+def test_dodge_chance_warrior():
+    warrior = Warrior("Dennis")
+    assert warrior.dodge_chance() == 0.6
+    
+def test_dodge_chance_mage():
+    mage = Mage("Daisy")
+    assert mage.dodge_chance() == 0.56
+
+def test_dodge_chance_archer():
+    archer = Archer("Dart")
+    assert archer.dodge_chance() == 0.5
+
+def test_dodge_chance_monster():
+    monster = Monster("Mawg")
+    assert monster.dodge_chance() == (monster.stealth * monster.defence) / 100
+    
+def test_hit_chance_warrior():
+    warrior = Warrior("Arthur")
+    enemy_1 = Monster("Argie", random.seed(1))
+    enemy_2 = Monster("Bleurgh", random.seed(2))
+    enemy_3 = Monster("Coral", random.seed(3))
+    assert round(warrior.hit_chance(enemy_1), 3) == 0.455
+    assert round(warrior.hit_chance(enemy_2), 3) == 0.525
+    assert round(warrior.hit_chance(enemy_3), 3) == 0.406
+
+
+    
+    
+    
+    
+    
     

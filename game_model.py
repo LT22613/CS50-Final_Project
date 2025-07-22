@@ -279,16 +279,17 @@ class Archer(Character):
         """
         super().__init__(name, max_health)
         self._health = self.max_health
+        self.power = 15
         self.defence = 5
         self.stealth = 10
-        self.power = 15
-        self.accuracy = 9
+        self.accuracy = 8
 
 
 class Monster(Character):
-    def __init__(self, name):
+    def __init__(self, name, seed = random.seed()):
         """Instantiates a Monster Object that inherits its methods and attributes from the Character Class."""
         super().__init__(name)
+        self.seed = seed
         self.max_health = random.randint(40, 80)
         self.health = self.max_health
         self.defence = random.randint(5, 8)
