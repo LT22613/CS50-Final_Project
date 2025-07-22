@@ -50,7 +50,7 @@ def test_archer_init():
     assert Craig.health == 50
     assert Craig.defence == 5
     assert Craig.stealth == 10
-    assert Craig.accuracy == 8
+    assert Craig.accuracy == 9
 
 def test_monster_init():
     """Verify that Monster starts with attributes in the correct range."""
@@ -197,6 +197,13 @@ def test_hit_chance_mage():
     assert round(mage.hit_chance(enemy_3), 3) == 0.464
     
 def test_hit_chance_archer():
+    archer = Archer("Shooter")
+    enemy_1 = Monster("Argie", random.seed(1))
+    enemy_2 = Monster("Bleurgh", random.seed(2))
+    enemy_3 = Monster("Coral", random.seed(3))
+    assert round(archer.hit_chance(enemy_1), 3) == 0.585
+    assert round(archer.hit_chance(enemy_2), 3) == 0.675
+    assert round(archer.hit_chance(enemy_3), 3) == 0.522
     
     
     

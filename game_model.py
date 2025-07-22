@@ -282,7 +282,7 @@ class Archer(Character):
         self.power = 15
         self.defence = 5
         self.stealth = 10
-        self.accuracy = 8
+        self.accuracy = 9
 
 
 class Monster(Character):
