@@ -224,7 +224,7 @@ class Warrior(Character):
         self.power = 20
         self._defence = 10
         self._stealth = 6
-        self._accuracy = 10
+        self._accuracy = 7
 
 
 class Mage(Character):
@@ -252,9 +252,9 @@ class Mage(Character):
         super().__init__(name, max_health)
         self._health = max_health
         self.power = 25
-        self.defence = 15
-        self.stealth = 10
-        self._accuracy = 15
+        self.defence = 7
+        self.stealth = 8
+        self._accuracy = 8
 
 
 class Archer(Character):
@@ -279,10 +279,10 @@ class Archer(Character):
         """
         super().__init__(name, max_health)
         self._health = self.max_health
-        self.defence = 10
-        self.stealth = 20
+        self.defence = 5
+        self.stealth = 10
         self.power = 15
-        self.accuracy = 20
+        self.accuracy = 9
 
 
 class Monster(Character):
@@ -291,8 +291,8 @@ class Monster(Character):
         super().__init__(name)
         self.max_health = random.randint(40, 80)
         self.health = self.max_health
-        self.defence = random.randint(5, 9)
-        self.stealth = random.randint(5, 9)
+        self.defence = random.randint(5, 8)
+        self.stealth = random.randint(5, 8)
         self.power = random.randint(5, 15)
 
 
