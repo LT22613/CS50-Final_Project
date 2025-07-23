@@ -1,4 +1,6 @@
 from game_model import *
+from game_interface import *
+import pytest
 import re
 
 """
@@ -36,5 +38,12 @@ def begin_game():
 begin_game()
 """
 
+"""
 warrior_1 = Warrior("Bob")
 print(warrior_1)
+"""
+
+def test_big(capsys):
+        begin_game()
+
+print(test_big)

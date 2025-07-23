@@ -240,7 +240,13 @@ class Warrior(Character):
         self._accuracy = 7
     
     def __str__(self):
-        return f"{self.name} is a mighty warrior with {self.health} life points!"
+        return f"""{self.name} is a mighty warrior with the following attributes:
+Health: {self.health}
+Power: {self.power}
+Defence: {self.defence}
+Stealth: {self.stealth}
+Accuracy: {self.accuracy}
+    """
 
 
 class Mage(Character):
@@ -273,7 +279,13 @@ class Mage(Character):
         self._accuracy = 8
     
     def __str__(self):
-        return f"{self.name} is a powerful Mage with 75 life points!"
+        return f"""{self.name} is a powerful Mage with the following attributes:
+Health: {self.health}
+Power: {self.power}
+Defence: {self.defence}
+Stealth: {self.stealth}
+Accuracy: {self.accuracy}
+    """
 
 
 class Archer(Character):
@@ -304,7 +316,13 @@ class Archer(Character):
         self.accuracy = 9
         
     def __str__(self):
-        return f"{self.name} is a powerful Archer with 50 life points."
+        return f"""{self.name} is a powerful Archer with the following attributes:
+Health: {self.health}
+Power: {self.power}
+Defence: {self.defence}
+Stealth: {self.stealth}
+Accuracy: {self.accuracy}
+"""
 
 
 class Monster(Character):
