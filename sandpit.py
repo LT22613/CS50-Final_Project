@@ -43,7 +43,7 @@ warrior_1 = Warrior("Bob")
 print(warrior_1)
 """
 
-def test_big(capsys):
-        begin_game()
 
-print(test_big)
+for _ in range(100):
+        chest = TreasureChest()
+        print(chest.num_of_coins)

@@ -340,16 +340,16 @@ class Monster(Character):
         return f"{self.name} is a nasty monster with {self.health} life points."
 
 
-class TreasureChest:
+class TreasureChest():
     """Defines a Treasure Chest item that contains a large number of coins."""
 
-    def __init__(self, num_of_coins):
+    def __init__(self):
         """Defines the number of coins in the treasure chest.
 
         Args:
             num_of_coins (int): Number of coins in the treasure chest.
         """
-        self.num_of_coins = num_of_coins
+        self.num_of_coins = random.randint(20, 50)
 
 
 class HealingPotion:
@@ -364,3 +364,10 @@ class HealingPotion:
     def __init__(self):
         self.num_uses = 5
         self.effect = 20
+        
+class Shopkeeper:
+    """A Shopkeeper object that sells HealingPotion objects and stat upgrades for the right price.
+    """
+    
+    def __init__(self):
+        self.store = {"healing_potion": 20, "max_health_increase": 2}

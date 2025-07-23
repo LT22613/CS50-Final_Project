@@ -66,8 +66,9 @@ def test_HealingPotion_init():
 def test_chest_init():
     """Verify that Chest starts with correct attribute
     """
-    chest = TreasureChest(100)
-    assert chest.num_of_coins == 100
+    for _ in range(1000):
+        chest = TreasureChest()
+        assert 20 <= chest.num_of_coins <= 50 
 
 # --------------------------
 # ATTRIBUTE SETTER TESTS
@@ -145,10 +146,10 @@ def test_heal_without_potion(capsys):
 
 def test_empty_chest():
     """Check that coins from a TreasureChest are added to the pouch."""
-    chest = TreasureChest(100)
+    chest = TreasureChest()
     Char_3 = Warrior("Damian")
     Char_3.empty_chest(chest)
-    assert Char_3.pouch["coins"] == 100
+    assert Char_3.pouch["coins"] == chest.num_of_coins
 
 def test_dodge_chance_warrior():
     """
@@ -261,7 +262,12 @@ def test_str(capsys):
     warrior_1 = Warrior("Bob")
     print(warrior_1)
     captured = capsys.readouterr()
-    assert captured.out.strip() == f"{warrior_1.name} is a mighty warrior with 100 life points!"
+    assert captured.out.strip() == f"""{warrior_1.name} is a mighty warrior with the following attributes:
+Health: {warrior_1.health}
+Power: {warrior_1.power}
+Defence: {warrior_1.defence}
+Stealth: {warrior_1.stealth}
+Accuracy: {warrior_1.accuracy}"""
 
 
     
