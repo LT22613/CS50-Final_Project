@@ -2,14 +2,21 @@ from game_model import *
 from game_interface import *
 import pytest
 import re
+from tabulate import tabulate
+import numpy as np
 
+def visualise_game():
+        """Provide the visual element of the game. 
+        The game is set in a 5x5 grid. The hero begins in the top-left and the game only successfully 
+        end if the hero makes it to the bottom right.
+        """
+        """
+        headers = [" ", " ", " ", " ", " "]
+        table = [[" ", " ", " ", " ", " "], [" ", " ", " ", " ", " "], [" ", " ", " ", " ", " "], [" ", " ", " ", " ", " "]]
+        
+        print(tabulate(table, headers, tablefmt = "grid"))
+        """
+        a = np.zeros(5)
+        print(a)
 
-def begin_game():
-        print("Welcome to Mazes and Monsters!\nThe objective of the game is to guide your Hero from the Start cell to the Finish cell.")
-        answer = input("Are you ready to begin?\n")
-        if re.fullmatch("yes|y", answer, flags = re.IGNORECASE):
-            pass
-        else:
-            raise QuitGameException   
-    
-begin_game()
+visualise_game()

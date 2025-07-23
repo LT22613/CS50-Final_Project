@@ -61,3 +61,4 @@ def test_create_hero_invalid_then_valid(monkeypatch, capsys):
     assert "Mage" in captured.out
     assert "Alex" in captured.out
 
+
