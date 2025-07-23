@@ -1,17 +1,15 @@
-from time import time
 from game_model import *
+from game_interface import *
 
-Bob = Warrior("Bob")
-print(Bob.stealth)
+def main():
+    """The main function will execute all the functions required to run the game.
+    """
+    
+    begin_game()
+    
 
-Sally = Mage("Sally")
-print(Sally.stealth)
 
-Meg = Archer("Meg")
 
-count = 0
-for _ in range(1000):
-    Enemy = Monster()
-    if Meg.attack_chance(Enemy) > 0.5:
-        count += 1
-print(count)
+
+if __name__ == "__main__":
+    main()
