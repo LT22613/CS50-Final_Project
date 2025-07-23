@@ -41,7 +41,11 @@ class Character(ABC):
         self._defence = defence
         self._stealth = stealth
         self.pouch = {}
-
+    
+    @abstractmethod
+    def __str__(self):
+        pass
+        
     @property
     def health(self) -> float:
         """Creates a health property that returns the character's current health.
@@ -234,6 +238,9 @@ class Warrior(Character):
         self._defence = 10
         self._stealth = 6
         self._accuracy = 7
+    
+    def __str__(self):
+        return f"{self.name} is a mighty warrior with {self.health} life points!"
 
 
 class Mage(Character):
@@ -264,6 +271,9 @@ class Mage(Character):
         self.defence = 7
         self.stealth = 8
         self._accuracy = 8
+    
+    def __str__(self):
+        return f"{self.name} is a powerful Mage with 75 life points!"
 
 
 class Archer(Character):
@@ -292,6 +302,9 @@ class Archer(Character):
         self.defence = 5
         self.stealth = 10
         self.accuracy = 9
+        
+    def __str__(self):
+        return f"{self.name} is a powerful Archer with 50 life points."
 
 
 class Monster(Character):
@@ -304,6 +317,9 @@ class Monster(Character):
         self.defence = random.randint(5, 8)
         self.stealth = random.randint(5, 8)
         self.power = random.randint(5, 15)
+    
+    def __str__(self):
+        return f"{self.name} is a nasty monster with {self.health} life points."
 
 
 class TreasureChest:

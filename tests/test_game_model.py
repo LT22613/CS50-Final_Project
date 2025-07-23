@@ -17,12 +17,6 @@ import pytest
 # INITIALISATION TESTS
 # --------------------------
 
-def test_character_init():
-    """Ensure Character objects initialize correctly with name and empty pouch."""
-    Char_1 = Character("Bob")
-    assert Char_1.name == "Bob"
-    assert Char_1.pouch == {}
-
 def test_warrior_init():
     """Verify Warrior starts with correct stats."""
     warrior = Warrior("Dylan")
@@ -123,12 +117,6 @@ def test_mage_stealth_limits():
 # METHOD BEHAVIOUR TESTS
 # --------------------------
 
-def test_character_pouch():
-    """Verify that the Character's pouch can store and retrieve items properly."""
-    Char_2 = Character("Chloe")
-    Char_2.pouch["Healing Potion"] = 1
-    assert Char_2.pouch == {"Healing Potion": 1}
-
 def test_warrior_pouch():
     """Test that the Warrior’s pouch behaves as expected."""
     warrior = Warrior("Lucifer")
@@ -141,7 +129,7 @@ def test_heal_with_potion():
     and reduces the number of potion uses.
     """
     potion = HealingPotion()
-    Claire = Character("Claire")
+    Claire = Warrior("Claire")
     Claire.health = 50
     Claire.pouch[potion] = 1
     Claire.heal()
@@ -150,7 +138,7 @@ def test_heal_with_potion():
 
 def test_heal_without_potion(capsys):
     """Test that a warning is printed if no healing potion is available."""
-    Dean = Character("Dean", 100)
+    Dean = Warrior("Dean")
     Dean.heal()
     captured = capsys.readouterr()
     assert captured.out.strip() == "You do not have a healing potion."
@@ -158,7 +146,7 @@ def test_heal_without_potion(capsys):
 def test_empty_chest():
     """Check that coins from a TreasureChest are added to the pouch."""
     chest = TreasureChest(100)
-    Char_3 = Character("Damian")
+    Char_3 = Warrior("Damian")
     Char_3.empty_chest(chest)
     assert Char_3.pouch["coins"] == 100
 
@@ -268,6 +256,12 @@ def test_attack_warrior(capsys):
     warrior.attack(enemy_3)
     captured = capsys.readouterr()
     assert captured.out.strip() == "Your low accuracy caused you to deal reduced damage"
+    
+def test_str(capsys):
+    warrior_1 = Warrior("Bob")
+    print(warrior_1)
+    captured = capsys.readouterr()
+    assert captured.out.strip() == f"{warrior_1.name} is a mighty warrior with 100 life points!"
 
 
     
