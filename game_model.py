@@ -240,7 +240,7 @@ class Warrior(Character):
         self._accuracy = 7
     
     def __str__(self):
-        return f"""{self.name} is a mighty warrior with the following attributes:
+        return f"""{self.name} is a mighty Warrior with the following attributes:
 Health: {self.health}
 Power: {self.power}
 Defence: {self.defence}
