@@ -63,16 +63,16 @@ def test_monster_init():
         assert 5 <= Blob.stealth <= 9
         assert 5 <= Blob.power <= 15
 
-def test_healing_potion_init():
+def test_HealingPotion_init():
     """Verify that Healing Potion starts with correct attributes."""
-    potion = Healing_Potion()
+    potion = HealingPotion()
     assert potion.num_uses == 5
     assert potion.effect == 20
     
 def test_chest_init():
     """Verify that Chest starts with correct attribute
     """
-    chest = Treasure_Chest(100)
+    chest = TreasureChest(100)
     assert chest.num_of_coins == 100
 
 # --------------------------
@@ -137,10 +137,10 @@ def test_warrior_pouch():
 
 def test_heal_with_potion():
     """
-    Ensure that using a Healing_Potion increases the character's health
+    Ensure that using a HealingPotion increases the character's health
     and reduces the number of potion uses.
     """
-    potion = Healing_Potion()
+    potion = HealingPotion()
     Claire = Character("Claire")
     Claire.health = 50
     Claire.pouch[potion] = 1
@@ -156,8 +156,8 @@ def test_heal_without_potion(capsys):
     assert captured.out.strip() == "You do not have a healing potion."
 
 def test_empty_chest():
-    """Check that coins from a Treasure_Chest are added to the pouch."""
-    chest = Treasure_Chest(100)
+    """Check that coins from a TreasureChest are added to the pouch."""
+    chest = TreasureChest(100)
     Char_3 = Character("Damian")
     Char_3.empty_chest(chest)
     assert Char_3.pouch["coins"] == 100
@@ -220,7 +220,7 @@ def test_hit_chance_warrior():
 def test_hit_chance_mage():
     """
     Test hit chance values for a Mage attacking three different Monsters.
-    Mage has higher accuracy and power, so results should be higher than Warrior's.
+    Mage has higher accuracy, so results should be higher than Warrior's.
     """
     mage = Mage("Henry")
     enemy_1 = Monster("Argie", random.seed(1))
@@ -255,16 +255,19 @@ def test_attack_warrior(capsys):
     warrior = Warrior("Dave")
     
     enemy_1 = Monster("Argie", random.seed(1))
-    print(warrior.attack(enemy_1))
+    warrior.attack(enemy_1)
     captured = capsys.readouterr()
     assert captured.out.strip() == "Your low accuracy caused you to deal reduced damage"
 
     enemy_2 = Monster("Bleurgh", random.seed(2))
-    print(warrior.attack(enemy_2))
+    warrior.attack(enemy_2)
     captured = capsys.readouterr()
     assert captured.out.strip() == "Your accuracy enabled you to deal regular damage"
 
     enemy_3 = Monster("Coral", random.seed(3))
+    warrior.attack(enemy_3)
+    captured = capsys.readouterr()
+    assert captured.out.strip() == "Your low accuracy caused you to deal reduced damage"
 
 
     

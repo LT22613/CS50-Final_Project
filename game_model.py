@@ -161,15 +161,15 @@ class Character(ABC):
         """An attack method for attacking an enemy object"""
         if self.hit_chance(enemy) > 0.7:
             enemy.health -= self.power * 1.5
-            return "Your high accuracy caused you to deal extra damage!"
+            print("Your high accuracy caused you to deal extra damage!")
         elif self.hit_chance(enemy) > 0.5:
             enemy.health -= self.power 
-            return "Your accuracy enabled you to deal regular damage"
+            print("Your accuracy enabled you to deal regular damage")
         elif self.hit_chance(enemy) > 0.3:
             enemy.health -= self.power * 0.5
-            return "Your low accuracy caused you to deal reduced damage"
+            print("Your low accuracy caused you to deal reduced damage")
         else:
-            return "Your accuracy is too low to harm this enemy"
+            print("Your accuracy is too low to harm this enemy")
         
 
     def heal(self) -> float:
@@ -181,12 +181,12 @@ class Character(ABC):
         Returns:
             int: New health of the Character
         """
-        # Check if any of the items in the pouch are Healing_Potion objects
-        healing_potions = [
-            item for item in self.pouch.keys() if isinstance(item, Healing_Potion)
+        # Check if any of the items in the pouch are HealingPotion objects
+        HealingPotions = [
+            item for item in self.pouch.keys() if isinstance(item, HealingPotion)
         ]
-        if healing_potions:
-            potion = healing_potions[0]
+        if HealingPotions:
+            potion = HealingPotions[0]
             # Check if the potion heals beyond the Character's max health
             if self.health + potion.effect > self.max_health:
                 self.health = self.max_health
@@ -201,7 +201,7 @@ class Character(ABC):
         """Add the number of coins in the chest to the Character's pouch.
 
         Args:
-            chest (Treasure_Chest): A Treasure_Chest instance that contains a number of coins
+            chest (TreasureChest): A TreasureChest instance that contains a number of coins
         """
         # Add the number of coins in the chest to the number of coins the character has
         if "coins" in self.pouch.keys():
@@ -306,7 +306,7 @@ class Monster(Character):
         self.power = random.randint(5, 15)
 
 
-class Treasure_Chest:
+class TreasureChest:
     """Defines a Treasure Chest item that contains a large number of coins."""
 
     def __init__(self, num_of_coins):
@@ -318,7 +318,7 @@ class Treasure_Chest:
         self.num_of_coins = num_of_coins
 
 
-class Healing_Potion:
+class HealingPotion:
     """Defines a Healing Potion
 
     Attributes:
