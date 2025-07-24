@@ -15,14 +15,20 @@ class QuitGameException(Exception):
 
 def begin_game():
         print("Welcome to Mazes and Monsters!\nThe objective of the game is to guide your Hero from the Start cell to the Finish cell.")
-        answer = input("Are you ready to begin? Yes or No.\n")
+        answer = input("\nAre you ready to begin? Yes or No.\n")
         if re.fullmatch("yes|y", answer, flags = re.IGNORECASE):
             pass
         else:
             raise QuitGameException
 
 def create_hero():
-    name = input("\nPlease choose a name for your Hero\n").capitalize()
+    while True:
+        name = input("\nPlease choose a name for your Hero\n").capitalize()
+        if name == "":
+            continue
+        else:
+            break
+        
     while True:
         option = input("\nPlease select which class you would like your Hero to be: Warrior/Mage/Archer\n")
         
