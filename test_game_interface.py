@@ -28,6 +28,8 @@ def test_begin_game_other(monkeypatch):
     with pytest.raises(QuitGameException):
         begin_game()
 
+
+
 def test_create_hero_warrior(monkeypatch, capsys):
     inputs = iter(["Conan", "Warrior"])
     monkeypatch.setattr('builtins.input', lambda _: next(inputs))
