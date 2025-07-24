@@ -45,8 +45,7 @@ def create_hero():
             print("\nPlease enter a valid class.")
             print("-" * 27)
             continue 
-    print()
-    print(hero)
+    return hero
 
 class Game(object):
     """A class representing the state and flow of the game.
@@ -69,7 +68,7 @@ class Game(object):
         self.hero = hero
         self.grid = grid
         self.hero_position = (0, 0)  # Start at top-left corner
-        print(f"Welcome to the Maze, {hero.name}!")
+        print(f"{"\n"}Welcome to the Maze, {hero.name}!")
     
     def user_turn(self):
         """Display turn indicator for the player."""

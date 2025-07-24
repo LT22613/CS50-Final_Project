@@ -8,9 +8,9 @@ def main():
     # Initialise the game interface by introducing the user to the game.
     begin_game()
     # Allow the user to create a Hero to play the game with.
-    create_hero()
+    hero = create_hero()
     # Initialise a maze object and display the Hero's starting position.
-    answer = input("Are you ready to begin your battle through the maze?\n")
+    answer = input("\nAre you ready to begin your battle through the maze?\n")
     if re.fullmatch("yes|y", answer, flags = re.IGNORECASE):
         pass
     else:
@@ -32,9 +32,15 @@ Press Enter to continue.
     print("""This is your starting position. The H represents your hero's current position.
 You can move up, left, right or down, so long as you stay within the maze's boundaries.
 Remember, the goal is to navigate to the bottom-right square. Good luck!""")
-    game_maze = Maze()
-    game_maze.print_maze()
+    # Instantiate a Maze object called grid
+    grid = Maze()
+    # Create a game_instance using the hero and grid created.
+    game_instance = Game(hero, grid)
+    # Print the maze to show the starting position.
+    grid.print_maze()
     
+    # Ask the player what they would like to do.
+     
 
 
 
