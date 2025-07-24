@@ -91,13 +91,14 @@ class Maze:
             print(" | ".join(row_display))
         print()  # Extra spacing
 
-# Example usage
-maze = Maze()  # Create default 5x5 maze
+if __name__ == "__main__":
+    # Example usage
+    maze = Maze()  # Create default 5x5 maze
 
-# Demonstrate hero movement
-maze.update_hero_position(0, 0)  # Move hero to starting position
-maze.print_maze()                # Display initial state
+    # Demonstrate hero movement
+    maze.update_hero_position(0, 0)  # Move hero to starting position
+    maze.print_maze()                # Display initial state
 
-maze.update_hero_position(4, 4)  # Move hero to new position
-maze.print_maze()                # Display updated state
+    maze.update_hero_position(4, 4)  # Move hero to new position
+    maze.print_maze()                # Display updated state
 
