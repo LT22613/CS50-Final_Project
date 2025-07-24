@@ -5,9 +5,7 @@
 4. Archer Object
 5. Monster Object
 6. Healing Potion
-7. Mana Potion
-8. Shopkeeper
-9. Boss - Subclass of Monster
+7. Shopkeeper
 """
 
 from abc import ABC, abstractmethod
