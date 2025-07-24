@@ -15,7 +15,7 @@ class QuitGameException(Exception):
 
 def begin_game():
         print("Welcome to Mazes and Monsters!\nThe objective of the game is to guide your Hero from the Start cell to the Finish cell.")
-        answer = input("Are you ready to begin?\n")
+        answer = input("Are you ready to begin? Yes or No.\n")
         if re.fullmatch("yes|y", answer, flags = re.IGNORECASE):
             pass
         else:
