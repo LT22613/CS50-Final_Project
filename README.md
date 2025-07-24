@@ -1,5 +1,5 @@
 # Mazes and Monsters
-    #### Video Demo:  <URL HERE>
+#### Video Demo:  <URL HERE>
 
 **Mazes and Monsters** is a text-based simulation game where a player navigates through a randomly generated maze, starting at the top-left corner and aiming to reach the bottom-right. Along the way, the player encounters monsters, treasure chests, and shopkeepers—all while managing health, resources, and survival!
 
