@@ -7,7 +7,15 @@ def main():
     """The main function will execute all the functions required to run the game.
     """
     # Initialise the game interface by introducing the user to the game.
-    begin_game()
+    print("Welcome to Mazes and Monsters!\n")
+    answer = input("Are you ready to begin? Yes or No.\n").lower()
+    while True:
+        if re.fullmatch("yes|y", answer):
+            break
+        elif re.fullmatch("no|n", answer):
+            sys.exit("That's a shame. Feel free to try the game out soon!")
+        else:
+            pass
     # Allow the user to create a Hero to play the game with.
     hero = create_hero()
     # Ask user if they want to begin the game.
@@ -21,13 +29,8 @@ def main():
     while True:
         game_instance.prompt_user()
         
-def begin_game():
-        print("Welcome to Mazes and Monsters!\n")
-        answer = input("Are you ready to begin? Yes or No.\n")
-        if re.fullmatch("yes|y", answer, flags = re.IGNORECASE):
-            pass
-        else:
-            raise QuitGameException
+class QuitGameException(Exception):
+    pass
 
 def create_hero():
     while True:
