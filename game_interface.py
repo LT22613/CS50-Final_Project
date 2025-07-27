@@ -191,7 +191,6 @@ class Game(object):
                 if self.hero.pouch["coins"] >= 10:
                     shopkeeper.sell_potion(self.hero)
                     self.hero.pouch["potion"] += 1
-                    self.hero.pouch["coins"] -= 10
                     print("Healing potion added to pouch.")
                     print(f"{self.hero.name} has {self.hero.pouch["coins"]} coins left.")
                 else:

@@ -372,7 +372,7 @@ class Shopkeeper:
     
     def __init__(self):
         self.store = {
-            "healing_potion": 20,  # Cost in coins
+            "healing_potion": 10,  # Cost in coins
             "accuracy_boost": 30,
             "defence_boost": 30,
             "stealth_boost": 30
