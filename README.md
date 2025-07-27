@@ -5,17 +5,14 @@
 
 ## Game Features
 
-- **Maze Adventure:** Traverse a randomly generated maze from start to finish.
+- **Maze Adventure:** Traverse a maze from start to finish.
 - **Character Classes:** Choose to play as a **Warrior**, **Mage**, or **Archer**—each based on a common `Character` class, but with unique strengths.
-- **Dynamic Encounters:** Each maze cell may contain nothing, a monster (combat!), a treasure chest (loot!), or a shopkeeper (trade!).
+- **Dynamic Encounters:** Each maze cell may contain nothing, a monster (combat!), a treasure chest (loot!), a healing potion or a shopkeeper (trade!).
 - **Resource & Combat Management:** Survive monster attacks, collect coins, and use items to stay alive.
 
 ## Object-Oriented Structure
 
 ### Main Classes
-
-- **Maze:**  
-  Represents the maze structure, defined by a specified number of rows and columns. Responsible for managing the layout and contents of each cell.
 
 - **Game:**  
   Controls the main game flow, including the prompting sequence and user interface for playing the game.
@@ -37,7 +34,8 @@
     - `defence`  
     - `stealth`  
     - `accuracy`  
-    - `pouch` (for storing coins and items)
+    - `coins'
+    - 'potions'
   - **Methods:**  
     - `dodge_chance()`: Calculates chance to dodge attacks.
     - `hit_chance()`: Determines accuracy of attacks.
@@ -72,13 +70,9 @@
 
 ## Credits
 
-- Developed by [Your Name]
+- Developed by Rafi Davis
 - Partial help from ChatGPT
-
-## License
-
-This project does not yet specify a license. If you wish to share or modify this code, please contact the author.
-
+- 
 ---
 
 Enjoy braving the maze as a mighty Warrior, cunning Mage, or sly Archer!
