@@ -8,14 +8,14 @@ def main():
     """
     # Initialise the game interface by introducing the user to the game.
     print("Welcome to Mazes and Monsters!\n")
-    answer = input("Are you ready to begin? Yes or No.\n").lower()
     while True:
+        answer = input("Are you ready to begin? Yes or No.\n").lower()
         if re.fullmatch("yes|y", answer):
             break
         elif re.fullmatch("no|n", answer):
-            sys.exit("That's a shame. Feel free to try the game out soon!")
+            sys.exit("\nThat's a shame. Feel free to try the game out soon!")
         else:
-            pass
+            print("\nPlease say yes or no.\n")
     # Allow the user to create a Hero to play the game with.
     hero = create_hero()
     # Ask user if they want to begin the game.

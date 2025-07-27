@@ -189,7 +189,7 @@ class Game(object):
 
             if choice == 'a':
                 if self.hero.pouch["coins"] >= 10:
-                    potion = shopkeeper.sell_potion(self.hero)
+                    shopkeeper.sell_potion(self.hero)
                     self.hero.pouch["potion"] += 1
                     self.hero.pouch["coins"] -= 10
                     print("Healing potion added to pouch.")
