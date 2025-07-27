@@ -214,7 +214,7 @@ class Character(ABC):
             else:
                 self.health += potion.effect
             # Reduce the number of uses of the healing potion by 1
-            potion.num_uses -= 1
+            self.potions -= 1
         else:
             print("You do not have a healing potion.")
 
@@ -379,7 +379,6 @@ class HealingPotion:
     """
 
     def __init__(self):
-        self.num_uses = 5
         self.effect = 20
         
 class Shopkeeper:
@@ -403,11 +402,11 @@ class Shopkeeper:
         Args:
             character (Character): The character buying the potion
         """
-        if self.coins < self.store["healing_potion"]:
+        if character.coins < self.store["healing_potion"]:
             print("Not enough coins!")
             return
         
-        self.potions += 1
+        character.potions += 1
         character.coins -= self.store["healing_potion"]
         print(f"Bought healing potion for {self.store['healing_potion']} coins")
 
@@ -423,11 +422,11 @@ class Shopkeeper:
             return
             
         cost = self.store[f"{stat}_boost"]
-        if self.coins < cost:
+        if character.coins < cost:
             print("Not enough coins!")
             return
 
         current_value = getattr(character, stat)
         setattr(character, stat, current_value + 1)
-        character.pouch["coins"] -= cost
+        character.coins -= cost
         print(f"Upgraded {stat} for {cost} coins")

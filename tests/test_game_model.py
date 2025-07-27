@@ -60,7 +60,6 @@ def test_monster_init():
 def test_HealingPotion_init():
     """Verify that Healing Potion starts with correct attributes."""
     potion = HealingPotion()
-    assert potion.num_uses == 5
     assert potion.effect == 20
     
 def test_chest_init():
@@ -135,7 +134,6 @@ def test_heal_with_potion():
     Claire.potions = 1
     Claire.heal(potion)
     assert Claire.health == 70
-    assert potion.num_uses == 4
 
 def test_heal_without_potion(capsys):
     """Test that a warning is printed if no healing potion is available."""

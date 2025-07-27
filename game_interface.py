@@ -69,8 +69,14 @@ class Game(object):
                 self.move_hero()
                 break
             elif choice == 'b':
-                if self.hero.heal():
-                    print("You feel rejuvenated!")
+                if self.hero.potions:
+                    potion = HealingPotion()
+                    self.hero.heal(potion)
+                    if self.hero.health < self.hero.max_health:
+                        self.hero.potions -= 1
+                        print(f"You feel rejuvenated! {self.hero.name} now has {self.hero.health} lifepoints.")
+                    else:
+                        print("Don't waste your potions. You have full life points.")
                 else:
                     print("No healing potions available.")
             elif choice == 'c':
@@ -128,11 +134,11 @@ class Game(object):
         elif isinstance(cell, TreasureChest):
             print("Oooooh! A treasure chest. I hope there are a lot of coins inside!")
             print(f"{self.hero.name} found {cell.num_of_coins} coins!")
-            self.hero.pouch["coins"] = cell.num_of_coins
+            self.hero.coins = cell.num_of_coins
             self.grid[self.hero_position[0]][self.hero_position[1]] = None
         elif isinstance(cell, HealingPotion):
             print("Wow! You found a healing potion! That's surely going to be useful!")
-            self.hero.pouch[HealingPotion] = 1
+            self.hero.potions += 1
             self.grid[self.hero_position[0]][self.hero_position[1]] = None
         elif isinstance(cell, Shopkeeper):
             print("You found Bert the Shopkeeper!")
@@ -188,18 +194,19 @@ class Game(object):
             choice = input("Enter your choice: ").strip().lower()
 
             if choice == 'a':
-                if self.hero.pouch["coins"] >= 10:
+                if self.hero.coins >= 10:
                     shopkeeper.sell_potion(self.hero)
-                    self.hero.pouch["potion"] += 1
+                    self.hero.potions += 1
                     print("Healing potion added to pouch.")
-                    print(f"{self.hero.name} has {self.hero.pouch["coins"]} coins left.")
+                    print(f"{self.hero.name} has {self.hero.coins} coins left.")
                 else:
                     print("Not enough coins.")
             elif choice == 'b':
-                if self.hero.pouch["coins"] >= 20:
-                    upgraded = shopkeeper.upgrade_stat(self.hero)
+                if self.hero.coins >= 20:
+                    stat = input("Which stat would you like to upgrade? Accuracy, defence or stealth").lower()
+                    upgraded = shopkeeper.upgrade_stat(self.hero, stat)
                     if upgraded:
-                        self.hero.pouch["coins"] -= 20
+                        self.hero.coins -= 20
                         print("Stat upgraded!")
                     else:
                         print("Stat already at max.")

@@ -16,8 +16,14 @@ def main():
             sys.exit("\nThat's a shame. Feel free to try the game out soon!")
         else:
             print("\nPlease say yes or no.\n")
-    # Allow the user to create a Hero to play the game with.
-    hero = create_hero()
+    # Allow the user to create a Hero to play the game with
+    while True:
+        name = input("\nEnter a name for your hero.\n")
+        if name == "":
+            continue
+        else:
+            break
+    hero = create_hero(name)
     # Ask user if they want to begin the game.
     ask_start()
     # Run the initial welcome message to the user, introducing the gameplay.
@@ -32,13 +38,7 @@ def main():
 class QuitGameException(Exception):
     pass
 
-def create_hero():
-    while True:
-        name = input("\nPlease choose a name for your Hero\n").capitalize()
-        if name == "":
-            continue
-        else:
-            break
+def create_hero(name):
         
     while True:
         option = input("\nPlease select which class you would like your Hero to be: Warrior/Mage/Archer\n")
@@ -70,7 +70,7 @@ def ask_start():
             continue
  
 def welcome_message():
-    input("""\nWelcome to the Maze! Here you will guide your hero as they navigate their way through the monsters that block their way to the finish line.
+    input("""\nWelcome to the Maze! Here you will guide your hero as they navigate their way through the monsters that block the way to the finish line.
       
 Press Enter to continue.
 """)
