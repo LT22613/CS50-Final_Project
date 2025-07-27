@@ -31,7 +31,7 @@ def main():
     # Create a game_instance using the hero and grid created.
     game_instance = Game(hero)
     
-    # Ask the player what they would like to do.
+    # This while block runs the game loop until completion.
     while True:
         game_instance.prompt_user()
         
