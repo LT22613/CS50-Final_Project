@@ -162,7 +162,7 @@ class Character(ABC):
     @potions.setter
     def potions(self, value):
         if value < 0:
-            print("Can't have negative number of potions")
+            return "Can't have negative number of potions"
         else:
             self._potions = value 
         
