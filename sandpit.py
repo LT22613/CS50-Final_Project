@@ -12,6 +12,7 @@ def visit_shopkeeper(hero, shopkeeper):
     - Stat Upgrade (20 coins)
     """
     while True:
+        print(f"Hero has {hero.pouch["coins"]} coins.")
         print("\nWhat would you like to buy?\nA. Healing Potion (10 coins)\nB. Stat Upgrade (20 coins)\nC. Nothing")
         choice = input("Enter your choice: ").strip().lower()
 
@@ -19,7 +20,6 @@ def visit_shopkeeper(hero, shopkeeper):
             if hero.pouch["coins"] >= 10:
                 shopkeeper.sell_potion(hero)
                 hero.pouch["potion"] += 1
-                hero.pouch["coins"] -= 10
                 print("Healing potion added to pouch.")
                 print(f"{hero.name} has {hero.pouch['coins']} coins left.")
             else:

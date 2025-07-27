@@ -38,7 +38,8 @@ class Character(ABC):
         self._accuracy = accuracy
         self._defence = defence
         self._stealth = stealth
-        self.pouch = {"coins": 0, "potion": 1}
+        self._coins = 0
+        self._potions = 1
     
     @abstractmethod
     def __str__(self):
@@ -142,6 +143,29 @@ class Character(ABC):
                 self._stealth = 10
         else:
             raise ValueError("Defence must be an integer")
+        
+    @property
+    def coins(self) -> int:
+        return self.coins
+    
+    @coins.setter
+    def coins(self, value) -> int:
+        if value < 0:
+            return "Can't have a negative number of coins"
+        else:
+            self.coins = value
+    
+    @property
+    def potions(self) -> int:
+        return self._potions
+    
+    @potions.setter
+    def potions(self, value):
+        if value < 0:
+            print("Can't have negative number of potions")
+        else:
+            self._potions = value 
+        
 
     def dodge_chance(self) -> int:
         """A method defining the chance of successfully avoiding an attack
