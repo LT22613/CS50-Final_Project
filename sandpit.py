@@ -1,9 +1,14 @@
-def create_grid(rows, cols):
-        grid = [[None for _ in range(cols)] for _ in range(rows)]
+import re
+import sys
 
-def print_grid(grid):
-        for row in grid:
-                print(" | ".join(type(cell).__name__[0] if cell else " " for cell in row))
-
-grid = create_grid(2,2)
-print_grid(grid)
+def ask_start():
+    while True:
+        answer = input("\nAre you ready to begin your battle through the maze?\n")
+        if re.fullmatch("yes|y", answer, flags = re.IGNORECASE):
+            break
+        elif re.fullmatch("no|n", answer, flags = re.IGNORECASE):
+            sys.exit("Ok. Come back when you feel ready to ")
+        else:
+            continue
+        
+ask_start()

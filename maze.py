@@ -24,7 +24,11 @@ class Maze:
         self.rows = rows
         self.cols = cols
         # Create empty 2D grid filled with None values
-        self.grid = [[None for _ in range(cols)] for _ in range(rows)]
+        self.grid = [[None, Monster("Goblin"), None, TreasureChest(), None],
+            [HealingPotion(), None, Monster("Orc"), None, None],
+            [None, TreasureChest(), None, Monster("Troll"), None],
+            [Monster("Skeleton"), None, HealingPotion(), None, Shopkeeper()],
+            [None, None, Monster("Dragon"), TreasureChest(), None]]
         self.hero_position = (0, 0)  # Default starting position at top-left
 
     def place_object(self, row: int, col: int, obj: object) -> None:

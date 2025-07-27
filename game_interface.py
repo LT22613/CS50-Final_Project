@@ -13,40 +13,6 @@ import tabulate
 class QuitGameException(Exception):
     pass
 
-def begin_game():
-        print("Welcome to Mazes and Monsters!\nThe objective of the game is to guide your Hero from the Start cell to the Finish cell.")
-        answer = input("\nAre you ready to begin? Yes or No.\n")
-        if re.fullmatch("yes|y", answer, flags = re.IGNORECASE):
-            pass
-        else:
-            raise QuitGameException
-
-def create_hero():
-    while True:
-        name = input("\nPlease choose a name for your Hero\n").capitalize()
-        if name == "":
-            continue
-        else:
-            break
-        
-    while True:
-        option = input("\nPlease select which class you would like your Hero to be: Warrior/Mage/Archer\n")
-        
-        if re.search("warrior", option, flags=re.IGNORECASE):
-            hero = Warrior(name)
-            break
-        elif re.search("mage", option, flags=re.IGNORECASE):
-            hero = Mage(name)
-            break
-        elif re.search("archer", option, flags = re.IGNORECASE):
-            hero = Archer(name)
-            break
-        else:
-            print("\nPlease enter a valid class.")
-            print("-" * 27)
-            continue 
-    return hero
-
 class Game(object):
     """A class representing the state and flow of the game.
     
@@ -58,7 +24,13 @@ class Game(object):
         grid (List[List]): The 2D maze grid containing game objects
         hero_position (tuple): Current (row, col) position of hero in the maze
     """
-    def __init__(self, hero, grid):
+    def __init__(self, hero, grid = [
+            [None, TreasureChest(), Shopkeeper(), TreasureChest(), None],
+            [HealingPotion(), None, Monster("Orc"), None, None],
+            [None, TreasureChest(), None, Monster("Troll"), None],
+            [Monster("Skeleton"), None, HealingPotion(), None, Shopkeeper()],
+            [None, None, Monster("Dragon"), TreasureChest(), None]
+        ]):
         """Initialize a new game instance.
         
         Args:
@@ -66,13 +38,16 @@ class Game(object):
             grid (List[List]): The 2D maze grid
         """
         self.hero = hero
+        self.rows = 5
+        self.cols = 5
         self.grid = grid
         self.hero_position = (0, 0)  # Start at top-left corner
-        print(f"{"\n"}Welcome to the Maze, {hero.name}!")
+        print(f"\nWelcome to the Maze, {hero.name}!")
     
     def user_turn(self):
         """Display turn indicator for the player."""
         print(f"\n🔹 It's {self.hero.name}'s turn 🔹")
+        print(f"{self.hero_position} is your current position")
         
     def prompt_user(self):
         """Prompt user for their action choice and handle the input.
@@ -90,11 +65,11 @@ class Game(object):
             print("\nChoose an action:\nA. Move\nB. Heal\nC. Quit")
             choice = input("Enter your choice: ").strip().lower()
 
-            if choice == 'a' or 'A':
+            if choice == 'a':
                 self.move_hero()
                 break
             elif choice == 'b':
-                if self.hero.use_healing_potion():
+                if self.hero.heal():
                     print("You feel rejuvenated!")
                 else:
                     print("No healing potions available.")
@@ -125,6 +100,9 @@ class Game(object):
         # Check if move is within grid bounds
         if 0 <= new_row < len(self.grid) and 0 <= new_col < len(self.grid[0]):
             self.hero_position = (new_row, new_col)
+            if self.hero_position == (4, 4):
+                print("Well done, you won!")
+                exit()
             self.game_turn()  # Process events at new position
         else:
             print("You can't move that way!")
@@ -139,24 +117,22 @@ class Game(object):
         - Shopkeeper (trading)
         """
         cell = self.grid[self.hero_position[0]][self.hero_position[1]]
-
+        
+        print()
         # Handle different cell contents
         if cell is None:
             print("Yay! No scary monsters here.")
         elif isinstance(cell, Monster):
             print("Aaargh! A terrifying monster!")
             self.fight(cell)
-        elif isinstance(cell, Boss):
-            print("😱 Boss Battle!")
-            self.fight(cell)
         elif isinstance(cell, TreasureChest):
             print("Oooooh! A treasure chest. I hope there are a lot of coins inside!")
             print(f"{self.hero.name} found {cell.num_of_coins} coins!")
-            self.hero.coins += cell.num_of_coins
+            self.hero.pouch["coins"] = cell.num_of_coins
             self.grid[self.hero_position[0]][self.hero_position[1]] = None
         elif isinstance(cell, HealingPotion):
             print("Wow! You found a healing potion! That's surely going to be useful!")
-            self.hero.pouch.add_potion(cell)
+            self.hero.pouch[HealingPotion] = 1
             self.grid[self.hero_position[0]][self.hero_position[1]] = None
         elif isinstance(cell, Shopkeeper):
             print("You found Bert the Shopkeeper!")
@@ -167,6 +143,35 @@ class Game(object):
         # Continue game flow
         self.user_turn()    
         self.prompt_user()
+    
+    def fight(self, enemy):
+        """
+        Simulates a turn-based battle between the hero and an enemy.
+        The fight continues until either the hero or the enemy is defeated (health reaches 0).
+        Each turn consists of the hero attacking first, followed by the enemy's counter-attack
+        if they survive.
+        Args:
+            enemy (Enemy): The enemy character object that the hero is fighting against
+        Returns:
+            None: The method either continues until combat is resolved or calls game_over()
+            if the hero is defeated
+        Side effects:
+            - Modifies hero and enemy health values during combat
+            - Prints combat results to console after each attack
+            - May trigger game_over() if hero is defeated
+        """
+        while self.hero.health > 0 and enemy.health > 0:
+            damage = self.hero.attack(enemy)
+            print(f"You did {damage} damage. Enemy health: {enemy.health}")
+            if enemy.health <= 0:
+                print("Yay! We smashed the nasty beastie to pieces!")
+                return
+
+            damage = enemy.attack(self.hero)
+            print(f"The enemy did {damage} damage. Your health: {self.hero.health}")
+
+        if self.hero.health <= 0:
+            self.game_over()
     
     def visit_shopkeeper(self, shopkeeper):
         """Handle shopping interaction with the shopkeeper.
@@ -183,18 +188,19 @@ class Game(object):
             choice = input("Enter your choice: ").strip().lower()
 
             if choice == 'a':
-                if self.hero.coins >= 10:
-                    potion = shopkeeper.sell_potion()
-                    self.hero.pouch.add_potion(potion)
-                    self.hero.coins -= 10
+                if self.hero.pouch["coins"] >= 10:
+                    potion = shopkeeper.sell_potion(self.hero)
+                    self.hero.pouch["potion"] += 1
+                    self.hero.pouch["coins"] -= 10
                     print("Healing potion added to pouch.")
+                    print(f"{self.hero.name} has {self.hero.pouch["coins"]} coins left.")
                 else:
                     print("Not enough coins.")
             elif choice == 'b':
-                if self.hero.coins >= 20:
+                if self.hero.pouch["coins"] >= 20:
                     upgraded = shopkeeper.upgrade_stat(self.hero)
                     if upgraded:
-                        self.hero.coins -= 20
+                        self.hero.pouch["coins"] -= 20
                         print("Stat upgraded!")
                     else:
                         print("Stat already at max.")
@@ -210,22 +216,4 @@ class Game(object):
         """Handle game over state when hero is defeated."""
         print("💀 Game Over. You were defeated.")
         exit()
-                
-                
-                
-                
-            
-      
-        
-
-
-
-
-        
-        
-        
-
-    
-def prompt_user():
-    ...
 

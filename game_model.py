@@ -38,7 +38,7 @@ class Character(ABC):
         self._accuracy = accuracy
         self._defence = defence
         self._stealth = stealth
-        self.pouch = {}
+        self.pouch = {"coins": 0, "potion": 1}
     
     @abstractmethod
     def __str__(self):
@@ -163,15 +163,15 @@ class Character(ABC):
         """An attack method for attacking an enemy object"""
         if self.hit_chance(enemy) > 0.7:
             enemy.health -= self.power * 1.5
-            print("Your high accuracy caused you to deal extra damage!")
+            return self.power * 1.5
         elif self.hit_chance(enemy) > 0.5:
             enemy.health -= self.power 
-            print("Your accuracy enabled you to deal regular damage")
+            return self.power
         elif self.hit_chance(enemy) > 0.3:
             enemy.health -= self.power * 0.5
-            print("Your low accuracy caused you to deal reduced damage")
+            return self.power * 0.5
         else:
-            print("Your accuracy is too low to harm this enemy")
+            return "Your accuracy is too low to harm this enemy."
         
 
     def heal(self) -> float:
@@ -364,8 +364,55 @@ class HealingPotion:
         self.effect = 20
         
 class Shopkeeper:
-    """A Shopkeeper object that sells HealingPotion objects and stat upgrades for the right price.
+    """A Shopkeeper object that sells HealingPotion objects and stat upgrades for coins.
+
+    Attributes:
+        store (dict): Dictionary of items and their prices in coins
     """
     
     def __init__(self):
-        self.store = {"healing_potion": 20, "max_health_increase": 2}
+        self.store = {
+            "healing_potion": 20,  # Cost in coins
+            "accuracy_boost": 30,
+            "defence_boost": 30,
+            "stealth_boost": 30
+        }
+
+    def sell_potion(self, character):
+        """Sells a healing potion to a character if they have enough coins.
+        
+        Args:
+            character (Character): The character buying the potion
+        """
+        if "coins" not in character.pouch or character.pouch["coins"] < self.store["healing_potion"]:
+            print("Not enough coins!")
+            return
+        
+        potion = HealingPotion()
+        if potion in character.pouch:
+            character.pouch[potion] += 1
+        else:
+            character.pouch[potion] = 1
+        character.pouch["coins"] -= self.store["healing_potion"]
+        print(f"Bought healing potion for {self.store['healing_potion']} coins")
+
+    def upgrade_stat(self, character, stat):
+        """Upgrades a character's stat if they have enough coins.
+        
+        Args:
+            character (Character): The character to upgrade
+            stat (str): The stat to upgrade (accuracy, defence, or stealth)
+        """
+        if stat not in ["accuracy", "defence", "stealth"]:
+            print("Invalid stat!")
+            return
+            
+        cost = self.store[f"{stat}_boost"]
+        if "coins" not in character.pouch or character.pouch["coins"] < cost:
+            print("Not enough coins!")
+            return
+
+        current_value = getattr(character, stat)
+        setattr(character, stat, current_value + 1)
+        character.pouch["coins"] -= cost
+        print(f"Upgraded {stat} for {cost} coins")

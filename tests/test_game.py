@@ -1,6 +1,6 @@
 import pytest
 from game_interface import Game, QuitGameException
-from game_model import Warrior, Monster, Boss, TreasureChest, HealingPotion, Shopkeeper
+from game_model import Warrior, Monster, TreasureChest, HealingPotion, Shopkeeper
 
 @pytest.fixture
 def basic_game():
