@@ -146,14 +146,14 @@ class Character(ABC):
         
     @property
     def coins(self) -> int:
-        return self.coins
+        return self._coins
     
     @coins.setter
     def coins(self, value) -> int:
         if value < 0:
             return "Can't have a negative number of coins"
         else:
-            self.coins = value
+            self._coins = value
     
     @property
     def potions(self) -> int:
@@ -198,7 +198,7 @@ class Character(ABC):
             return "Your accuracy is too low to harm this enemy."
         
 
-    def heal(self) -> float:
+    def heal(self, potion) -> float:
         """Defines a healing method
 
         Args:
@@ -207,18 +207,13 @@ class Character(ABC):
         Returns:
             int: New health of the Character
         """
-        # Check if any of the items in the pouch are HealingPotion objects
-        HealingPotions = [
-            item for item in self.pouch.keys() if isinstance(item, HealingPotion)
-        ]
-        if HealingPotions:
-            potion = HealingPotions[0]
+        if self.potions:
             # Check if the potion heals beyond the Character's max health
-            if self.health + potion.effect > self.max_health:
+            if self.health + potion.effect  > self.max_health:
                 self.health = self.max_health
             else:
                 self.health += potion.effect
-            # Reduce the number of uses of the healing potion by 1.
+            # Reduce the number of uses of the healing potion by 1
             potion.num_uses -= 1
         else:
             print("You do not have a healing potion.")
@@ -230,10 +225,10 @@ class Character(ABC):
             chest (TreasureChest): A TreasureChest instance that contains a number of coins
         """
         # Add the number of coins in the chest to the number of coins the character has
-        if "coins" in self.pouch.keys():
-            self.pouch["coins"] += chest.num_of_coins
+        if self.coins:
+            self.coins += chest.num_of_coins
         else:
-            self.pouch["coins"] = chest.num_of_coins
+            self.coins = chest.num_of_coins
 
 
 class Warrior(Character):
@@ -262,7 +257,7 @@ class Warrior(Character):
         self._accuracy = 7
     
     def __str__(self):
-        return f"""{self.name} is a mighty Warrior with the following attributes:
+        return f"""{self.name} is a mighty warrior with the following attributes:
 Health: {self.health}
 Power: {self.power}
 Defence: {self.defence}
@@ -408,16 +403,12 @@ class Shopkeeper:
         Args:
             character (Character): The character buying the potion
         """
-        if "coins" not in character.pouch or character.pouch["coins"] < self.store["healing_potion"]:
+        if self.coins < self.store["healing_potion"]:
             print("Not enough coins!")
             return
         
-        potion = HealingPotion()
-        if potion in character.pouch:
-            character.pouch[potion] += 1
-        else:
-            character.pouch[potion] = 1
-        character.pouch["coins"] -= self.store["healing_potion"]
+        self.potions += 1
+        character.coins -= self.store["healing_potion"]
         print(f"Bought healing potion for {self.store['healing_potion']} coins")
 
     def upgrade_stat(self, character, stat):
@@ -432,7 +423,7 @@ class Shopkeeper:
             return
             
         cost = self.store[f"{stat}_boost"]
-        if "coins" not in character.pouch or character.pouch["coins"] < cost:
+        if self.coins < cost:
             print("Not enough coins!")
             return
 
