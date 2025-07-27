@@ -36,10 +36,19 @@ def main():
         game_instance.prompt_user()
         
 class QuitGameException(Exception):
+    """Custom exception to handle quitting the game."""
     pass
 
 def create_hero(name):
-        
+    """
+    Prompts the user to select a hero class and creates a hero instance.
+
+    Args:
+        name (str): The name of the hero.
+
+    Returns:
+        Hero: An instance of the selected hero class (Warrior, Mage, or Archer).
+    """
     while True:
         option = input("\nPlease select which class you would like your Hero to be: Warrior/Mage/Archer\n")
         
@@ -49,7 +58,7 @@ def create_hero(name):
         elif re.search("mage", option, flags=re.IGNORECASE):
             hero = Mage(name)
             break
-        elif re.search("archer", option, flags = re.IGNORECASE):
+        elif re.search("archer", option, flags=re.IGNORECASE):
             hero = Archer(name)
             break
         else:
@@ -59,17 +68,25 @@ def create_hero(name):
     return hero
 
 def ask_start():
+    """
+    Asks the user if they are ready to begin the game.
+    Exits the program if the user answers 'no'.
+    """
     while True:
         answer = input("\nAre you ready to begin your battle through the maze?\n")
-        if re.fullmatch("yes|y", answer, flags = re.IGNORECASE):
+        if re.fullmatch("yes|y", answer, flags=re.IGNORECASE):
             break
-        elif re.fullmatch("no|n", answer, flags = re.IGNORECASE):
+        elif re.fullmatch("no|n", answer, flags=re.IGNORECASE):
             sys.exit("Ok. Come back when you feel ready to ")
         else:
             print("Please answer yes or no.\n")
             continue
  
 def welcome_message():
+    """
+    Displays a series of welcome messages to introduce the player to the game mechanics.
+    Waits for the user to press Enter after each message.
+    """
     input("""\nWelcome to the Maze! Here you will guide your hero as they navigate their way through the monsters that block the way to the finish line.
       
 Press Enter to continue.
@@ -85,8 +102,6 @@ Press Enter to continue.
     print("""This is your starting position. The H represents your hero's current position.
 You can move up, left, right or down, so long as you stay within the maze's boundaries.
 Remember, the goal is to navigate to the bottom-right square. Good luck!""")     
-
-
 
 
 if __name__ == "__main__":
