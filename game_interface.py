@@ -7,8 +7,6 @@ This module focuses on creating the interaction between the users and the game, 
 as the visuals of the game.
 """
 from game_model import *
-import re        
-import tabulate
 
 class QuitGameException(Exception):
     pass

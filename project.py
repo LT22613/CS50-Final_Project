@@ -1,6 +1,5 @@
 from game_model import *
 from game_interface import *
-from maze import Maze
 import sys
 
 def main():
@@ -99,9 +98,9 @@ Press Enter to continue.
 
 Press Enter to continue.
 """)
-    print("""This is your starting position. The H represents your hero's current position.
+    print("""(1,1) is your starting position.
 You can move up, left, right or down, so long as you stay within the maze's boundaries.
-Remember, the goal is to navigate to the bottom-right square. Good luck!""")     
+Remember, the goal is to navigate to the bottom-right square, (4,4). Good luck!""")     
 
 
 if __name__ == "__main__":
