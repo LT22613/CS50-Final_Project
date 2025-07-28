@@ -6,6 +6,7 @@ def main():
     """The main function will execute all the functions required to run the game.
     """
     # Initialise the game interface by introducing the user to the game.
+    """
     print("Welcome to Mazes and Monsters!\n")
     while True:
         answer = input("Are you ready to begin? Yes or No.\n").lower()
@@ -15,6 +16,7 @@ def main():
             sys.exit("\nThat's a shame. Feel free to try the game out soon!")
         else:
             print("\nPlease say yes or no.\n")
+    """
     # Allow the user to create a Hero to play the game with
     while True:
         name = input("\nEnter a name for your hero.\n")
@@ -23,10 +25,12 @@ def main():
         else:
             break
     hero = create_hero(name)
+    """
     # Ask user if they want to begin the game.
     ask_start()
     # Run the initial welcome message to the user, introducing the gameplay.
     welcome_message()
+    """
     # Create a game_instance using the hero and grid created.
     game_instance = Game(hero)
     
@@ -98,7 +102,7 @@ Press Enter to continue.
 
 Press Enter to continue.
 """)
-    print("""(1,1) is your starting position.
+    print("""(0,0) is your starting position.
 You can move up, left, right or down, so long as you stay within the maze's boundaries.
 Remember, the goal is to navigate to the bottom-right square, (4,4). Good luck!""")     
 

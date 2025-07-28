@@ -7,6 +7,7 @@ This module focuses on creating the interaction between the users and the game, 
 as the visuals of the game.
 """
 from game_model import *
+import sys
 
 class QuitGameException(Exception):
     pass
@@ -62,7 +63,7 @@ class Game(object):
             # Display action menu
             print("\nChoose an action:\nA. Move\nB. Heal\nC. Quit")
             choice = input("Enter your choice: ").strip().lower()
-
+            
             if choice == 'a':
                 self.move_hero()
                 break
@@ -73,12 +74,12 @@ class Game(object):
                     if self.hero.health < self.hero.max_health:
                         self.hero.potions -= 1
                         print(f"You feel rejuvenated! {self.hero.name} now has {self.hero.health} lifepoints.")
-                    else:
+                    elif self.hero.health == self.hero.max_health:
                         print("Don't waste your potions. You have full life points.")
                 else:
                     print("No healing potions available.")
             elif choice == 'c':
-                raise QuitGameException("Thanks for playing!")
+                sys.exit("\nGoodbye. Come back soon!")
             else:
                 print("Invalid choice. Please try again.")
     
@@ -105,7 +106,7 @@ class Game(object):
         if 0 <= new_row < len(self.grid) and 0 <= new_col < len(self.grid[0]):
             self.hero_position = (new_row, new_col)
             if self.hero_position == (4, 4):
-                print("Well done, you won!")
+                print("\nWell done, you won!")
                 exit()
             self.game_turn()  # Process events at new position
         else:
@@ -166,7 +167,10 @@ class Game(object):
         """
         while self.hero.health > 0 and enemy.health > 0:
             damage = self.hero.attack(enemy)
-            print(f"You did {damage} damage. Enemy health: {enemy.health}")
+            if type(damage) == float or type(damage) == int:
+                print(f"You did {damage} damage. Enemy health: {enemy.health}")
+            else:
+                print(damage)
             if enemy.health <= 0:
                 print("Yay! We smashed the nasty beastie to pieces!")
                 return
@@ -201,7 +205,7 @@ class Game(object):
                     print("Not enough coins.")
             elif choice == 'b':
                 if self.hero.coins >= 20:
-                    stat = input("Which stat would you like to upgrade? Accuracy, defence or stealth").lower()
+                    stat = input("Which stat would you like to upgrade? Accuracy, defence or stealth. ").lower()
                     upgraded = shopkeeper.upgrade_stat(self.hero, stat)
                     if upgraded:
                         self.hero.coins -= 20
