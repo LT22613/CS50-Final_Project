@@ -355,6 +355,21 @@ class Monster(Character):
     
     def __str__(self):
         return f"{self.name} is a nasty monster with {self.health} life points."
+    
+    def attack(self, hero):
+        """An attack method for attacking a hero object"""
+        if self.hit_chance(hero) > 0.7:
+            hero.health -= self.power * 1.5
+            return self.power * 1.5
+        elif self.hit_chance(hero) > 0.5:
+            hero.health -= self.power 
+            return self.power
+        elif self.hit_chance(hero) > 0.3:
+            hero.health -= self.power * 0.5
+            return self.power * 0.5
+        else:
+            return "The enemy's accuracy is too low to harm you."
+        
 
 
 class TreasureChest():

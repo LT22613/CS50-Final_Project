@@ -70,8 +70,8 @@ class Game(object):
             elif choice == 'b':
                 if self.hero.potions:
                     potion = HealingPotion()
-                    self.hero.heal(potion)
                     if self.hero.health < self.hero.max_health:
+                        self.hero.heal(potion)
                         self.hero.potions -= 1
                         print(f"You feel rejuvenated! {self.hero.name} now has {self.hero.health} lifepoints.")
                     elif self.hero.health == self.hero.max_health:
@@ -177,7 +177,12 @@ class Game(object):
                 return
 
             damage = enemy.attack(self.hero)
-            print(f"The enemy did {damage} damage. Your health: {self.hero.health}")
+            if type(damage) == float or type(damage) == int:
+                print(f"The enemy did {damage} damage.")
+            else:
+                print(damage)
+            
+
 
         if self.hero.health <= 0:
             self.game_over()
