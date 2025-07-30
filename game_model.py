@@ -391,9 +391,9 @@ class Shopkeeper:
     def __init__(self):
         self.store = {
             "healing_potion": 10,  # Cost in coins
-            "accuracy_boost": 30,
-            "defence_boost": 30,
-            "stealth_boost": 30
+            "accuracy_boost": 20,
+            "defence_boost": 20,
+            "stealth_boost": 20
         }
 
     def sell_potion(self, character):
@@ -428,5 +428,5 @@ class Shopkeeper:
 
         current_value = getattr(character, stat)
         setattr(character, stat, current_value + 1)
-        character.coins -= cost
+        character.coins -
         return f"Upgraded {stat} for {cost} coins"

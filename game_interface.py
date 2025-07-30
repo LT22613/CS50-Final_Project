@@ -208,8 +208,13 @@ class Game(object):
                     stat = input("Which stat would you like to upgrade? Accuracy, defence or stealth. ").lower()
                     upgraded = shopkeeper.upgrade_stat(self.hero, stat)
                     if upgraded:
-                        self.hero.coins -= 20
-                        print("Stat upgraded!")
+                        match stat:
+                            case "accuracy":
+                                print(f"Your {stat} is now {self.hero.accuracy}")
+                            case "defence": 
+                                print(f"Your {stat} is now {self.hero.defence}")
+                            case "stealth":
+                                print(f"Your {stat} is now {self.hero.stealth}")
                     else:
                         print("Stat already at max.")
                 else:
