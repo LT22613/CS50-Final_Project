@@ -106,6 +106,7 @@ class Game(object):
         if 0 <= new_row < len(self.grid) and 0 <= new_col < len(self.grid[0]):
             self.hero_position = (new_row, new_col)
             if self.hero_position == (4, 4):
+                print(self.hero_position, end="")
                 print("\nWell done, you won!")
                 exit()
             self.game_turn()  # Process events at new position
