@@ -215,6 +215,7 @@ class Game(object):
                                 print(f"Your {stat} is now {self.hero.defence}")
                             case "stealth":
                                 print(f"Your {stat} is now {self.hero.stealth}")
+                        print(f"You now have {self.hero.coins} coins left")
                     else:
                         print("Stat already at max.")
                 else:
