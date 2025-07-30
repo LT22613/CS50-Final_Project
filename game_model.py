@@ -428,5 +428,5 @@ class Shopkeeper:
 
         current_value = getattr(character, stat)
         setattr(character, stat, current_value + 1)
-        character.coins -
-        return f"Upgraded {stat} for {cost} coins"
+        character.coins -= cost
+        return f"Upgraded {stat} for {cost} coins{"\n"}You have {character.coins} left"
