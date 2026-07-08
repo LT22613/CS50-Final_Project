@@ -4,7 +4,7 @@ import sys
 
 def main():
     """The main function will execute all the functions required to run the game.
-    
+
     Initialise the game interface by introducing the user to the game.
     """
     print("Welcome to Mazes and Monsters!\n")
@@ -16,7 +16,7 @@ def main():
             sys.exit("\nThat's a shame. Feel free to try the game out soon!")
         else:
             print("\nPlease say yes or no.\n")
-    
+
     # Allow the user to create a Hero to play the game with
     while True:
         name = input("\nEnter a name for your hero.\n")
@@ -25,7 +25,7 @@ def main():
         else:
             break
     hero = create_hero(name)
-    
+
     # Ask user if they want to begin the game.
     ask_start()
     # Run the initial welcome message to the user, introducing the gameplay.
@@ -33,11 +33,11 @@ def main():
 
     # Create a game_instance using the hero and grid created.
     game_instance = Game(hero)
-    
+
     # This while block runs the game loop until completion.
     while True:
         game_instance.prompt_user()
-        
+
 class QuitGameException(Exception):
     """Custom exception to handle quitting the game."""
     pass
@@ -54,7 +54,7 @@ def create_hero(name):
     """
     while True:
         option = input("\nPlease select which class you would like your Hero to be: Warrior/Mage/Archer\n")
-        
+
         if re.search("warrior", option, flags=re.IGNORECASE):
             hero = Warrior(name)
             break
@@ -67,7 +67,7 @@ def create_hero(name):
         else:
             print("\nPlease enter a valid class.")
             print("-" * 27)
-            continue 
+            continue
     return hero
 
 def ask_start():
@@ -84,18 +84,18 @@ def ask_start():
         else:
             print("Please answer yes or no.\n")
             continue
- 
+
 def welcome_message():
     """
     Displays a series of welcome messages to introduce the player to the game mechanics.
     Waits for the user to press Enter after each message.
     """
     input("""\nWelcome to the Maze! Here you will guide your hero as they navigate their way through the monsters that block the way to the finish line.
-      
+
 Press Enter to continue.
 """)
     input("""You will shortly see a display of your hero's starting location. In each cell, your hero may either encounter a monster, healing potion,
-treasure chest or a shopkeeper. 
+treasure chest or a shopkeeper.
 
 Press Enter to continue.
 """)
@@ -105,7 +105,7 @@ Press Enter to continue.
 """)
     print("""(0,0) is your starting position.
 You can move up, left, right or down, so long as you stay within the maze's boundaries.
-Remember, the goal is to navigate to the bottom-right square, (4,4). Good luck!""")     
+Remember, the goal is to navigate to the bottom-right square, (4,4). Good luck!""")
 
 
 if __name__ == "__main__":

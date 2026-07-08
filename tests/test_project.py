@@ -9,7 +9,7 @@ def test_welcome_message_prompts(monkeypatch, capsys):
     welcome_message()
     captured = capsys.readouterr()
     # Check that the final print statement is present
-    assert "(1,1) is your starting position." in captured.out
+    assert "(0,0) is your starting position." in captured.out
     assert "You can move up, left, right or down" in captured.out
     assert "Remember, the goal is to navigate to the bottom-right square, (4,4). Good luck!" in captured.out
 
